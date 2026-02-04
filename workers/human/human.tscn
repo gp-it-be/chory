@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://c3nei1h8al2ba"]
+
+[ext_resource type="Texture2D" uid="uid://cy46j4faycq5b" path="res://workers/human/human.png" id="1_0dq3i"]
+[ext_resource type="Script" uid="uid://wrd18bt2ep4i" path="res://workers/human/human.gd" id="2_vk3am"]
+[ext_resource type="Script" uid="uid://8k6noeqodcni" path="res://workers/human/waiting.gd" id="3_vk3am"]
+[ext_resource type="Script" uid="uid://er580wpow6sk" path="res://workers/human/idle.gd" id="4_1cm3i"]
+[ext_resource type="Script" uid="uid://dj66xro5u3o2q" path="res://workers/human/working.gd" id="5_avdb7"]
+
+[node name="Human" type="Node2D" unique_id=1770626819]
+script = ExtResource("2_vk3am")
+
+[node name="Human" type="Sprite2D" parent="." unique_id=1744754221]
+texture = ExtResource("1_0dq3i")
+
+[node name="WaitingFor" type="Node2D" parent="Human" unique_id=453175398]
+script = ExtResource("3_vk3am")
+
+[node name="Idle" type="Node2D" parent="Human" unique_id=1839594150]
+script = ExtResource("4_1cm3i")
+
+[node name="Working" type="Node2D" parent="Human" unique_id=614526033]
+script = ExtResource("5_avdb7")
