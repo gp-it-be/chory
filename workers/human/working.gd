@@ -24,8 +24,6 @@ func __process(delta: float):
 	
 	if await process_finishes_current_step(delta):
 		_current_step_index = wrapi(_current_step_index +1, 0, _steps.size())
-		print(_current_step_index)
-		print(typeof(_current_step))
 
 func process_finishes_current_step(delta: float) -> bool:
 	if _current_step is Step.GoTo:

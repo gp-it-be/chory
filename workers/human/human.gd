@@ -3,7 +3,7 @@ class_name Human extends Node2D
 
 var _state : HumanState
 
-var _current_item :Enums.ItemType ##TODO do this not in Enums
+var _current_item #Items.ItemType ##TODO do this not in Enums
 
 
 func _ready():
