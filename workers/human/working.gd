@@ -41,24 +41,26 @@ func process_finishes_current_step(delta: float) -> bool:
 		var picked_up = _pickup_item(_pickup.bin)
 		if not picked_up:
 			_current_step_paused = true
-			await _pickup.bin.restocked
+			await _pickup.bin.wait_for_at_least_items_available(1)
 			_current_step_paused = false
 		return picked_up
 
 	push_error("cant get here atm, but gdscript doesnt know, and wont tell me when we can.")
 	return false
 
+
 func _pickup_item(from:Bin):
 	var maybe_item = from.pickup()
 	if maybe_item != null:
-		human._current_item = maybe_item
+		human._inventory.add(1,maybe_item)
 		return true
 	else: 
 		return false
 
 func _deliver_item(to: Bin):
-	to.deliver(human._current_item)
-	human._current_item = null
+	if not human._inventory.try_take(1):
+		push_error("how the fuck did we get here without an item?")
+	to.deliver(Items.ItemType.FOO) #TODO change at some point
 	
 
 func _near(bin :Bin):

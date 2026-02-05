@@ -1,26 +1,28 @@
 #TODO binnenkort bedenken hoe verschillende machines eigenschappen zullen delen
-class_name Bin extends Node2D
+class_name Bin extends Node2D 
 
-signal restocked() #when was empty and no longer is
+signal stock_changed(count:int) 
+
+var _stock = ItemHolder.new()
 
 var _item_type := Items.ItemType.FOO
 
-var _stock := 2
+func _ready() -> void:
+	_stock.stock_changed.connect(func(value):
+		stock_changed.emit(value)
+		$Debug.text = str(value)
+		)
+	_stock.add(2, _item_type)
 
 func pickup():
-	if _stock >= 1:
-		_stock -= 1
-		debug()
+	if _stock.try_take(1):
 		return _item_type
 	return null
 
 
 func deliver(type: Items.ItemType):
-	_stock += 1
-	if _stock == 1:
-		restocked.emit()
-	debug()
+	_stock.add(1, type)
 
-
-func debug():
-	$Debug.text = str(_stock)
+func wait_for_at_least_items_available(amount: int):
+	await _stock.wait_for_at_least(amount)
+	
