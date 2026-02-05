@@ -1,14 +1,13 @@
 class_name Human extends Node2D
 
 
-
 var _state : HumanState
 
-var _current_item #: Bin.ItemType #TODO move enum
+var _current_item :Enums.ItemType ##TODO do this not in Enums
 
 
 func _ready():
-	var states = [$Human/WaitingFor, $Human/Idle, $Human/Working]
+	var states = [$Human/Idle, $Human/Working]
 	for state in states:
 		state.human = self
 	_state = $Human/Idle
@@ -25,13 +24,16 @@ func _process(delta: float) -> void:
 
 func transition_to_working(task: MoveTask):
 	print("transition to working")
-	_state = $Human/Working
+	_state = $Human/Working as WorkingState
 	_state.work(task)
 	
+func continue_work():
+	_state = $Human/Working as WorkingState
 	
 func transition_to_idle():
 	print("transition to idle")
 	_state = $Human/Idle
+	
 	
 class MoveTask:
 	var from: Bin

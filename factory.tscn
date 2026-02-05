@@ -17,12 +17,21 @@ color = Color(0.8475407, 0.7107708, 0.5937839, 1)
 [node name="Objects" type="Node2D" parent="." unique_id=47912914]
 
 [node name="Bin1" parent="Objects" unique_id=1141987969 instance=ExtResource("2_keyo3")]
-position = Vector2(334, 483)
+position = Vector2(148, 261)
 
 [node name="Bin2" parent="Objects" unique_id=975766989 instance=ExtResource("2_keyo3")]
-position = Vector2(699, 333)
+position = Vector2(611, 531)
+
+[node name="Bin3" parent="Objects" unique_id=1922040310 instance=ExtResource("2_keyo3")]
+position = Vector2(901, 267)
 
 [node name="Workers" type="Node2D" parent="." unique_id=1776649459]
 
 [node name="Human" parent="Workers" unique_id=1770626819 instance=ExtResource("3_y1mhp")]
-position = Vector2(774, 531)
+position = Vector2(158, 316)
+
+[node name="Human2" parent="Workers" unique_id=467547772 instance=ExtResource("3_y1mhp")]
+position = Vector2(678, 479)
+
+[node name="Human3" parent="Workers" unique_id=1325404264 instance=ExtResource("3_y1mhp")]
+position = Vector2(828, 260)
