@@ -1,6 +1,4 @@
-
-#mss een variant implementeren die maar 1 type kan holden enzo?
-class_name ItemHolder
+class_name Inventory
 
 signal stock_changed(count:int) #TODO extend met itemtype?
 

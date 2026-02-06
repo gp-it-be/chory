@@ -3,7 +3,7 @@ class_name Human extends Node2D
 
 var _state : HumanState
 
-var _inventory = ItemHolder.new()
+var _inventory = Inventory.new()
 
 
 func _ready():
@@ -11,10 +11,11 @@ func _ready():
 	for state in states:
 		state.human = self
 	_state = $Human/Idle
-	
 
-func give_task(from : Bin, to:Bin ):
-	var task = MoveTask.new(from, to)
+#Not satisfied with ItemProvider and GlobalPosition being passed seperatly
+#Hoping I'll discover a way to improve this
+func give_task(from : ItemProvider, to:ItemSink, from_position: GlobalPosition, to_position: GlobalPosition ):
+	var task = MoveTask.new(from, to, from_position, to_position)
 	_state.give_task(task)
 
 
@@ -36,9 +37,13 @@ func transition_to_idle():
 	
 	
 class MoveTask:
-	var from: Bin
-	var to: Bin
+	var from: ItemProvider
+	var to: ItemSink
+	var from_position: GlobalPosition
+	var to_position: GlobalPosition
 	
-	func _init(_from: Bin, _to: Bin):
+	func _init(_from: ItemProvider, _to: ItemSink, _from_position: GlobalPosition, _to_position:GlobalPosition):
 		from = _from
 		to = _to
+		from_position = _from_position
+		to_position = _to_position

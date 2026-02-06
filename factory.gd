@@ -9,6 +9,6 @@ extends Node2D
 
 
 func _ready() -> void:
-	human.give_task(bin, bin2)
-	human2.give_task(bin2, bin3)
-	human3.give_task(bin3, bin)
+	human.give_task(bin.as_provider(), bin2.as_sink(), bin.as_position(), bin2.as_position())
+	human2.give_task(bin2.as_provider(), bin3.as_sink(), bin2.as_position(), bin3.as_position())
+	human3.give_task(bin3.as_provider(), bin.as_sink(), bin3.as_position(), bin.as_position())

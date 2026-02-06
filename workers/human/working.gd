@@ -11,9 +11,9 @@ var _current_step_paused := false #The current step is paused, and it will set t
 
 func work(task: Human.MoveTask):
 	_steps = [
-		Step.GoTo.new(task.from), 
+		Step.GoTo.new(task.from_position), 
 		Step.Pickup.new(task.from),
-		Step.GoTo.new(task.to), 
+		Step.GoTo.new(task.to_position), 
 		Step.Deliver.new(task.to)
 	]
 	_current_step_index = 0
@@ -27,21 +27,21 @@ func __process(delta: float):
 
 func process_finishes_current_step(delta: float) -> bool:
 	if _current_step is Step.GoTo:
-		var _goto = _current_step as Step.GoTo
-		_move_toward(_goto.bin, delta)
-		return _near(_goto.bin)
+		var step = _current_step as Step.GoTo
+		_move_toward(step.global_position, delta)
+		return _near(step.global_position)
 
 	if _current_step is Step.Deliver:
-		var _deliver = _current_step as Step.Deliver
-		_deliver_item(_deliver.bin)
+		var step = _current_step as Step.Deliver
+		_deliver_item(step.to)
 		return true
 
-	if _current_step is 	Step.Pickup:
-		var _pickup = _current_step as Step.Pickup
-		var picked_up = _pickup_item(_pickup.bin)
+	if _current_step is Step.Pickup:
+		var step = _current_step as Step.Pickup
+		var picked_up = _pickup_item(step.from)
 		if not picked_up:
 			_current_step_paused = true
-			await _pickup.bin.wait_for_at_least_items_available(1)
+			await step.from.wait_for_at_least_items_available(1)
 			_current_step_paused = false
 		return picked_up
 
@@ -49,23 +49,23 @@ func process_finishes_current_step(delta: float) -> bool:
 	return false
 
 
-func _pickup_item(from:Bin):
-	var maybe_item = from.pickup()
-	if maybe_item != null:
+func _pickup_item(from:ItemProvider):
+	var maybe_item = from.pickup(1)
+	if maybe_item == ItemProvider.PickupResult.SUCCESS:
 		human._inventory.add(1,maybe_item)
 		return true
 	else: 
 		return false
 
-func _deliver_item(to: Bin):
+func _deliver_item(to: ItemSink):
 	if not human._inventory.try_take(1):
 		push_error("how the fuck did we get here without an item?")
 	to.deliver(Items.ItemType.FOO) #TODO change at some point
 	
 
-func _near(bin :Bin):
-	return bin.global_position.distance_squared_to(global_position) < 1000
+func _near(global :GlobalPosition):
+	return global.get_global_position().distance_squared_to(global_position) < 1000
 
-func _move_toward(bin:Bin, delta: float):
-	human.rotation = human.global_position.angle_to_point(bin.global_position)
+func _move_toward(global:GlobalPosition, delta: float):
+	human.rotation = human.global_position.angle_to_point(global.get_global_position())
 	human.position += Vector2.from_angle(human.rotation) * delta * 300
