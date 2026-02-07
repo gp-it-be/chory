@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://c6wc31vacw71o"]
+
+[ext_resource type="Script" uid="uid://ff2nauqm75qd" path="res://items/containers/buypoint/buypoint.gd" id="1_uw30q"]
+[ext_resource type="Texture2D" uid="uid://bmfvoeukt0w0k" path="res://items/containers/buypoint/buypoint.png" id="2_4qhq6"]
+[ext_resource type="Script" uid="uid://cegnldx8b5a1e" path="res://items/containers/buypoint/buypoint_ui.gd" id="3_4qhq6"]
+
+[node name="Buypoint" type="Node2D" unique_id=667913321]
+script = ExtResource("1_uw30q")
+
+[node name="Buypoint" type="Sprite2D" parent="." unique_id=621657915]
+rotation = -3.1415927
+texture = ExtResource("2_4qhq6")
+
+[node name="DebugLabel" type="Label" parent="." unique_id=1320464591]
+offset_left = -7.0
+offset_top = 21.0
+offset_right = 33.0
+offset_bottom = 44.0
+
+[node name="UI" type="Control" parent="." unique_id=483528400]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 36.0
+offset_top = -60.0
+offset_right = 76.0
+offset_bottom = -20.0
+script = ExtResource("3_4qhq6")
+
+[node name="PanelContainer" type="PanelContainer" parent="UI" unique_id=832568048]
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer" unique_id=1027311738]
+layout_mode = 2
+
+[node name="Seperator" type="HSeparator" parent="UI/PanelContainer/VBoxContainer" unique_id=505430162]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="UI/PanelContainer/VBoxContainer" unique_id=949153584]
+layout_mode = 2
+text = "Close"
+
+[node name="Seperator2" type="HSeparator" parent="UI/PanelContainer/VBoxContainer" unique_id=2042343103]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="BuyButton" type="Button" parent="UI/PanelContainer/VBoxContainer" unique_id=1974639985]
+layout_mode = 2
+text = "Buy 10"

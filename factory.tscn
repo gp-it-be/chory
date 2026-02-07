@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bnrkjkqq2r07e" path="res://items/containers/salepoint/salepoint.tscn" id="2_br4io"]
 [ext_resource type="PackedScene" uid="uid://djpn06iha3lsn" path="res://items/containers/bin/bin.tscn" id="2_keyo3"]
 [ext_resource type="PackedScene" uid="uid://be0fwocc67ek1" path="res://machines/processor/processor.tscn" id="2_y1mhp"]
+[ext_resource type="PackedScene" uid="uid://c6wc31vacw71o" path="res://items/containers/buypoint/buypoint.tscn" id="3_br4io"]
 [ext_resource type="PackedScene" uid="uid://c3nei1h8al2ba" path="res://workers/human/human.tscn" id="3_y1mhp"]
 
 [node name="Factory" type="Node2D" unique_id=329804466]
@@ -16,19 +17,19 @@ custom_minimum_size = Vector2(1920, 1080)
 offset_right = 1920.0
 offset_bottom = 1080.0
 size_flags_horizontal = 0
+mouse_filter = 1
 color = Color(0.28494582, 0.2046169, 0.1330407, 1)
 
 [node name="SalePoint" parent="." unique_id=903017345 instance=ExtResource("2_br4io")]
 position = Vector2(986, 498)
 
+[node name="Buypoint" parent="." unique_id=667913321 instance=ExtResource("3_br4io")]
+position = Vector2(257, 83)
+
 [node name="Objects" type="Node2D" parent="." unique_id=47912914]
 
 [node name="Processor" parent="Objects" unique_id=350878203 instance=ExtResource("2_y1mhp")]
 position = Vector2(508, 382)
-
-[node name="Bin1" parent="Objects" unique_id=1141987969 instance=ExtResource("2_keyo3")]
-position = Vector2(148, 261)
-start_count = 3
 
 [node name="Bin3" parent="Objects" unique_id=1922040310 instance=ExtResource("2_keyo3")]
 position = Vector2(901, 267)
