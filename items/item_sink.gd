@@ -8,6 +8,9 @@ var _real_object: Variant:
 func deliver(type: Items.ItemType):
 	_real_object.add(1, type)
 
+func item_count():
+	return _real_object.count()
+
 static func wrap(object: Variant) -> ItemSink:
 	var sink = ItemSink.new()
 	sink._real_object = object
@@ -24,9 +27,9 @@ func _assert_obj_has_method(object: Variant, name: String, param_types: Array[Va
 		if method["args"].size() != param_types.size(): continue
 		var params_match := true
 		for i in range(0,param_types.size()):
-			print(method["args"][i]["type"], " should equal ", param_types[i])
-			print(method["args"][i]["class_name"], " should equal ",param_type_class_names[i])
-			if method["args"][i]["type"] != param_types[i] or method["args"][i]["class_name"] != param_type_class_names[i] : 
+			#print(method["args"][i]["type"], " should equal ", param_types[i])
+			#print(method["args"][i]["class_name"], " should equal ",param_type_class_names[i])
+			if method["args"][i]["type"] != param_types[i] or method["args"][i]["class_name"] != param_type_class_names[i]: 
 				params_match = false
 		if not params_match: continue
 		return true

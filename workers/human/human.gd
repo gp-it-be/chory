@@ -2,9 +2,7 @@ class_name Human extends Node2D
 
 
 var _state : HumanState
-
 var _inventory = Inventory.new()
-
 
 func _ready():
 	var states = [$Human/Idle, $Human/Working]
@@ -18,10 +16,8 @@ func give_task(from : ItemProvider, to:ItemSink, from_position: GlobalPosition, 
 	var task = MoveTask.new(from, to, from_position, to_position)
 	_state.give_task(task)
 
-
 func _process(delta: float) -> void:
 	_state.__process(delta)
-
 
 func transition_to_working(task: MoveTask):
 	print("transition to working")
@@ -33,8 +29,7 @@ func continue_work():
 	
 func transition_to_idle():
 	print("transition to idle")
-	_state = $Human/Idle
-	
+	_state = $Human/Idle	
 	
 class MoveTask:
 	var from: ItemProvider
