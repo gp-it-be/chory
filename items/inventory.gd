@@ -14,10 +14,14 @@ func try_take(amound: int) -> bool: #wether taking was succesful
 		stock_changed.emit(_count)
 		return true
 	return false
+	
+func try_add(amount: int, _type: Items.ItemType) -> bool: #wether adding was succesful
+	_count += amount
+	stock_changed.emit(_count)
+	return true
 
 func count() -> int:
 	return  _count
-
 
 func wait_for_at_least(amount : int):
 	while true:

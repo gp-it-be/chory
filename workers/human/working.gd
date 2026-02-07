@@ -60,7 +60,8 @@ func _pickup_item(from:ItemProvider):
 func _deliver_item(to: ItemSink):
 	if not human._inventory.try_take(1):
 		push_error("how the fuck did we get here without an item?")
-	to.deliver(Items.ItemType.FOO) #TODO change at some point
+	var result = to.try_deliver(Items.ItemType.FOO) #TODO change at some point
+	assert(result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full")
 	
 
 func _near(global :GlobalPosition):

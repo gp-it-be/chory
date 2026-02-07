@@ -6,7 +6,13 @@ var _real_object: Variant:
 		_real_object = value
 
 func deliver(type: Items.ItemType):
+	assert(false,"deprecated")
 	_real_object.add(1, type)
+	
+func try_deliver(type: Items.ItemType) -> DeliverResult:
+	if _real_object.try_add(1, type):
+		return DeliverResult.SUCCESS
+	return DeliverResult.FAILED
 
 func item_count():
 	return _real_object.count()
@@ -17,7 +23,7 @@ static func wrap(object: Variant) -> ItemSink:
 	return sink
 
 func _validate_interface(obj: Variant):
-	_assert_obj_has_method(obj, "add", [typeof(1), typeof(Items.ItemType.FOO)], ["", "Items.ItemType"])
+	_assert_obj_has_method(obj, "try_add", [typeof(1), typeof(Items.ItemType.FOO)], ["", "Items.ItemType"])
 	
 func _assert_obj_has_method(object: Variant, name: String, param_types: Array[Variant], param_type_class_names: Array[Variant]):
 	var methods :Array[Dictionary]= object.get_method_list()
@@ -34,3 +40,9 @@ func _assert_obj_has_method(object: Variant, name: String, param_types: Array[Va
 		if not params_match: continue
 		return true
 	assert(false, "Does not respect the interface of method %s" % name)
+
+
+enum DeliverResult {
+	SUCCESS,
+	FAILED
+}

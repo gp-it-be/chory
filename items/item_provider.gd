@@ -34,8 +34,6 @@ func _validate_interface(obj: Variant):
 	
 	assert(has, "Does not respect the interface")
 
-
-
 enum PickupResult {
 	SUCCESS,
 	FAILED
