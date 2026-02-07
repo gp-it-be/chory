@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cb8g6r0awxoor"]
+
+[ext_resource type="PackedScene" uid="uid://dgetbp07ibgk4" path="res://factory.tscn" id="1_63c7r"]
+[ext_resource type="Script" uid="uid://biqe0fvifnp7f" path="res://main/hud.gd" id="2_2fwfh"]
+
+[node name="Main" type="Node2D" unique_id=1220372258]
+
+[node name="Factory" parent="." unique_id=329804466 instance=ExtResource("1_63c7r")]
+
+[node name="HUD" type="Control" parent="." unique_id=2139183652]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("2_2fwfh")
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD" unique_id=156643839]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/PanelContainer" unique_id=560476051]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HUD/PanelContainer/HBoxContainer" unique_id=1720750227]
+layout_mode = 2
+text = "$ 0"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dft0rjf2ni5ub"
-path="res://.godot/imported/bin.png-4f4a7d99adbee419f1eaaa23ab93e03a.ctex"
+uid="uid://bferhhun6uu1e"
+path="res://.godot/imported/salepoint.png-e2ec910bdcb9e7965ef56210406615b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://machines/bin/bin.png"
-dest_files=["res://.godot/imported/bin.png-4f4a7d99adbee419f1eaaa23ab93e03a.ctex"]
+source_file="res://items/containers/salepoint/salepoint.png"
+dest_files=["res://.godot/imported/salepoint.png-e2ec910bdcb9e7965ef56210406615b3.ctex"]
 
 [params]
 

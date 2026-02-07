@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://dgetbp07ibgk4"]
 
 [ext_resource type="Script" uid="uid://c3ptkgqng3bhe" path="res://factory.gd" id="1_qjjrk"]
-[ext_resource type="PackedScene" uid="uid://djpn06iha3lsn" path="res://machines/bin/bin.tscn" id="2_keyo3"]
+[ext_resource type="PackedScene" uid="uid://bnrkjkqq2r07e" path="res://items/containers/salepoint/salepoint.tscn" id="2_br4io"]
+[ext_resource type="PackedScene" uid="uid://djpn06iha3lsn" path="res://items/containers/bin/bin.tscn" id="2_keyo3"]
 [ext_resource type="PackedScene" uid="uid://be0fwocc67ek1" path="res://machines/processor/processor.tscn" id="2_y1mhp"]
 [ext_resource type="PackedScene" uid="uid://c3nei1h8al2ba" path="res://workers/human/human.tscn" id="3_y1mhp"]
 
@@ -11,9 +12,14 @@ script = ExtResource("1_qjjrk")
 [node name="Floor" type="Node2D" parent="." unique_id=2015018603]
 
 [node name="ColorRect" type="ColorRect" parent="Floor" unique_id=404957917]
-offset_right = 1151.0
-offset_bottom = 650.0
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+size_flags_horizontal = 0
 color = Color(0.28494582, 0.2046169, 0.1330407, 1)
+
+[node name="SalePoint" parent="." unique_id=903017345 instance=ExtResource("2_br4io")]
+position = Vector2(986, 498)
 
 [node name="Objects" type="Node2D" parent="." unique_id=47912914]
 
@@ -22,18 +28,18 @@ position = Vector2(508, 382)
 
 [node name="Bin1" parent="Objects" unique_id=1141987969 instance=ExtResource("2_keyo3")]
 position = Vector2(148, 261)
+start_count = 3
 
 [node name="Bin3" parent="Objects" unique_id=1922040310 instance=ExtResource("2_keyo3")]
 position = Vector2(901, 267)
-start_count = 1
 
 [node name="Workers" type="Node2D" parent="." unique_id=1776649459]
 
 [node name="Human" parent="Workers" unique_id=1770626819 instance=ExtResource("3_y1mhp")]
-position = Vector2(158, 316)
+position = Vector2(301, 328)
 
 [node name="Human2" parent="Workers" unique_id=467547772 instance=ExtResource("3_y1mhp")]
-position = Vector2(678, 479)
+position = Vector2(660, 349)
 
 [node name="Human3" parent="Workers" unique_id=1325404264 instance=ExtResource("3_y1mhp")]
-position = Vector2(828, 260)
+position = Vector2(1000, 323)

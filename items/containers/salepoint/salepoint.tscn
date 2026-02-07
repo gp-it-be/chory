@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bnrkjkqq2r07e"]
+
+[ext_resource type="Script" uid="uid://b2swpykl25bqs" path="res://items/containers/salepoint/salepoint.gd" id="1_tpw4e"]
+[ext_resource type="Texture2D" uid="uid://bferhhun6uu1e" path="res://items/containers/salepoint/salepoint.png" id="2_qfml3"]
+
+[node name="SalePoint" type="Node2D" unique_id=903017345]
+script = ExtResource("1_tpw4e")
+
+[node name="Salepoint" type="Sprite2D" parent="." unique_id=1893102817]
+texture = ExtResource("2_qfml3")

@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 	$Processing/AnimationPlayer.play("process_item")
 	await get_tree().create_timer(3).timeout
 	var deliver_result = _output.try_deliver(Items.ItemType.FOO)
-	assert(result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full")
+	assert(deliver_result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full")
 	
 	$Processing/AnimationPlayer.play("RESET")
 	_waiting = false

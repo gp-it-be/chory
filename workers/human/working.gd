@@ -52,13 +52,13 @@ func process_finishes_current_step(delta: float) -> bool:
 func _pickup_item(from:ItemProvider):
 	var maybe_item = from.pickup(1)
 	if maybe_item == ItemProvider.PickupResult.SUCCESS:
-		human._inventory.add(1,maybe_item)
+		human.inventory.add(1,maybe_item)
 		return true
 	else: 
 		return false
 
 func _deliver_item(to: ItemSink):
-	if not human._inventory.try_take(1):
+	if not human.inventory.try_take(1):
 		push_error("how the fuck did we get here without an item?")
 	var result = to.try_deliver(Items.ItemType.FOO) #TODO change at some point
 	assert(result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full")

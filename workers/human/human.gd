@@ -2,7 +2,7 @@ class_name Human extends Node2D
 
 
 var _state : HumanState
-var _inventory = Inventory.new()
+var inventory = Inventory.new()
 
 func _ready():
 	var states = [$Human/Idle, $Human/Working]
