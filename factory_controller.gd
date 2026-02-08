@@ -4,13 +4,12 @@ signal task_execution_requested(task: Human.MoveTask)
 @onready var task_line: Line2D = $TaskLine
 static var _instance : FactoryController
 var _containers : Array = []
-
-@onready var worker_controller: Workers = $WorkerController
+var _worker_controller: Workers 
 
 
 func _ready():
 	_instance = self
-	print(null != null)
+	_instance._worker_controller = $WorkerController
 
 var _dragging := false
 var _start_container:
@@ -31,9 +30,9 @@ var _end_container:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("select_next_worker"):
-		worker_controller.select_next_worker()
+		_worker_controller.select_next_worker()
 	if event.is_action_pressed("abort_worker_task"):
-		worker_controller.abort_worker_task()
+		_worker_controller.abort_worker_task()
 	
 	if event is InputEventMouse and event.is_action_pressed("click"):
 		_start_container = _find_start_nearby(event.global_position)
@@ -49,7 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_start_container.select()
 		elif _start_container and _end_container:
 			assert(_start_container.has_method("as_provider") and _end_container.has_method("as_sink"), "Should probably keep containers in 2 lists and only allow starting from providers")
-			task_execution_requested.emit(
+			_worker_controller.assign_task(
 				Human.MoveTask.new(_start_container.as_provider(), _end_container.as_sink(), _start_container.as_position(), _end_container.as_position())
 			)
 		_start_container = null
