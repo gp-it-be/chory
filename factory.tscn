@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://be0fwocc67ek1" path="res://machines/processor/processor.tscn" id="2_y1mhp"]
 [ext_resource type="PackedScene" uid="uid://c6wc31vacw71o" path="res://items/containers/buypoint/buypoint.tscn" id="3_br4io"]
 [ext_resource type="PackedScene" uid="uid://c3nei1h8al2ba" path="res://workers/human/human.tscn" id="3_y1mhp"]
-[ext_resource type="Script" uid="uid://dr7g0gkj3jhdt" path="res://workers.gd" id="6_h5ffw"]
+[ext_resource type="Script" uid="uid://dr7g0gkj3jhdt" path="res://workers_controller.gd" id="6_h5ffw"]
 [ext_resource type="Texture2D" uid="uid://du72lytjcqdl7" path="res://selection.png" id="7_5iljq"]
 [ext_resource type="Script" uid="uid://ds8kjgnnpvxnm" path="res://factory_controller.gd" id="9_nb4f5"]
 
@@ -26,16 +26,27 @@ color = Color(0.28494582, 0.2046169, 0.1330407, 1)
 [node name="Controller" type="Node2D" parent="." unique_id=1605500241]
 script = ExtResource("9_nb4f5")
 
+[node name="WorkerController" type="Node2D" parent="Controller" unique_id=1776649459]
+script = ExtResource("6_h5ffw")
+
+[node name="Selection" type="Node2D" parent="Controller/WorkerController" unique_id=76209110]
+
+[node name="Selection2" type="Sprite2D" parent="Controller/WorkerController/Selection" unique_id=1693518090]
+texture = ExtResource("7_5iljq")
+
 [node name="TaskLine" type="Line2D" parent="Controller" unique_id=1036842692]
 position = Vector2(-1, 0)
 
-[node name="SalePoint" parent="." unique_id=903017345 instance=ExtResource("2_br4io")]
-position = Vector2(986, 498)
-
-[node name="Buypoint" parent="." unique_id=667913321 instance=ExtResource("3_br4io")]
-position = Vector2(257, 83)
-
 [node name="Objects" type="Node2D" parent="." unique_id=47912914]
+
+[node name="Human" parent="Objects" unique_id=1770626819 instance=ExtResource("3_y1mhp")]
+position = Vector2(301, 328)
+
+[node name="Human2" parent="Objects" unique_id=467547772 instance=ExtResource("3_y1mhp")]
+position = Vector2(660, 349)
+
+[node name="Human3" parent="Objects" unique_id=1325404264 instance=ExtResource("3_y1mhp")]
+position = Vector2(1000, 323)
 
 [node name="Processor" parent="Objects" unique_id=350878203 instance=ExtResource("2_y1mhp")]
 position = Vector2(508, 382)
@@ -43,19 +54,11 @@ position = Vector2(508, 382)
 [node name="Bin3" parent="Objects" unique_id=1922040310 instance=ExtResource("2_keyo3")]
 position = Vector2(901, 267)
 
-[node name="Workers" type="Node2D" parent="." unique_id=1776649459]
-script = ExtResource("6_h5ffw")
+[node name="SalePoint" parent="Objects" unique_id=903017345 instance=ExtResource("2_br4io")]
+position = Vector2(986, 498)
 
-[node name="Selection" type="Node2D" parent="Workers" unique_id=76209110]
+[node name="Buypoint" parent="Objects" unique_id=667913321 instance=ExtResource("3_br4io")]
+position = Vector2(257, 83)
 
-[node name="Selection2" type="Sprite2D" parent="Workers/Selection" unique_id=1693518090]
-texture = ExtResource("7_5iljq")
-
-[node name="Human" parent="Workers" unique_id=1770626819 instance=ExtResource("3_y1mhp")]
-position = Vector2(301, 328)
-
-[node name="Human2" parent="Workers" unique_id=467547772 instance=ExtResource("3_y1mhp")]
-position = Vector2(660, 349)
-
-[node name="Human3" parent="Workers" unique_id=1325404264 instance=ExtResource("3_y1mhp")]
-position = Vector2(1000, 323)
+[node name="Buypoint2" parent="Objects" unique_id=1957234794 instance=ExtResource("3_br4io")]
+position = Vector2(161, 482)

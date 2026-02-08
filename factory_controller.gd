@@ -5,6 +5,9 @@ signal task_execution_requested(task: Human.MoveTask)
 static var _instance : FactoryController
 var _containers : Array = []
 
+@onready var worker_controller: Workers = $WorkerController
+
+
 func _ready():
 	_instance = self
 	print(null != null)
@@ -27,8 +30,13 @@ var _end_container:
 		_end_container = value
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("select_next_worker"):
+		worker_controller.select_next_worker()
+	if event.is_action_pressed("abort_worker_task"):
+		worker_controller.abort_worker_task()
+	
 	if event is InputEventMouse and event.is_action_pressed("click"):
-		_start_container = _find_nearby(event.global_position)
+		_start_container = _find_start_nearby(event.global_position)
 		_dragging = _start_container != null
 		_end_location = null
 		_end_container = null
@@ -36,7 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("click"):
 		_dragging = false
 		
-		if _start_container and _find_nearby(event.global_position) ==_start_container:
+		if _start_container and _find_start_nearby(event.global_position) ==_start_container:
 			assert(_start_container.has_method("select"), "should probably only allow selecting selectables")
 			_start_container.select()
 		elif _start_container and _end_container:
@@ -49,7 +57,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_end_container = null
 	
 	if _dragging and event is InputEventMouseMotion:
-		_end_container = _find_nearby(event.global_position)
+		_end_container = _find_end_nearby(event.global_position)
 		if _end_container:
 			_end_location = _end_container.global_position
 		else:
@@ -91,9 +99,23 @@ func _update_line(from: Vector2, to: Vector2):
 static func register_container(object):
 	_instance._containers.append(object)
 	
+static func register_worker(worker: Human):
+	_instance._worker_controller.register_worker(worker)
 	
-func _find_nearby(global_pos: Vector2):
+func _find_start_nearby(global_pos: Vector2):
 	for container in _containers:
+		if not container.has_method("as_provider"):
+			"wont start from a container that isnt a provider"
+			continue
+		if container.global_position.distance_squared_to(global_pos) < 1000:
+			return container
+	return null
+
+func _find_end_nearby(global_pos: Vector2):
+	for container in _containers:
+		if not container.has_method("as_sink"):
+			"wont end at a container that isnt a sink"
+			continue
 		if container.global_position.distance_squared_to(global_pos) < 1000:
 			return container
 	return null

@@ -9,6 +9,7 @@ func _ready():
 	for state in states:
 		state.human = self
 	_state = $Human/Idle
+	FactoryController.register_worker(self)
 
 #Not satisfied with ItemProvider and GlobalPosition being passed seperatly
 #Hoping I'll discover a way to improve this
