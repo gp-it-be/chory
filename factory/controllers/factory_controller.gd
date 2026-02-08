@@ -1,15 +1,18 @@
 class_name FactoryController extends Node2D
 
-signal task_execution_requested(task: Human.MoveTask)
-@onready var task_line: Line2D = $TaskLine
+
 static var _instance : FactoryController
 var _containers : Array = []
 var _worker_controller: Workers 
+var _sad_task_line: Line2D
+var _happy_task_line: Line2D
 
 
 func _ready():
 	_instance = self
 	_instance._worker_controller = $WorkerController
+	_instance._happy_task_line = $HappyTaskLine
+	_instance._sad_task_line = $SadTaskLine
 
 var _dragging := false
 var _start_container:
@@ -24,7 +27,6 @@ var _end_location:#:Vector2?
 
 var _end_container:
 	set(value):
-		#print(_end_container,"and",  value, " are equal? ", _end_container != value)
 		if _end_container != value: _end_container_updating(_end_container, value)
 		_end_container = value
 
@@ -42,7 +44,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if event.is_action_released("click"):
 		_dragging = false
-		
 		if _start_container and _find_start_nearby(event.global_position) ==_start_container:
 			assert(_start_container.has_method("select"), "should probably only allow selecting selectables")
 			_start_container.select()
@@ -83,17 +84,23 @@ func _end_location_updating(new):
 		assert(_start_container != null)
 		var from = _start_container.global_position
 		var to = new
-		_update_line(from, to)
+		_update_line(from, to, _end_container != null)
 	else:
 		_clear_line()
 
 func _clear_line():
-	task_line.clear_points()
+	_sad_task_line.hide()
+	_happy_task_line.hide()
 
-func _update_line(from: Vector2, to: Vector2):
-	task_line.clear_points()
-	task_line.add_point(from)
-	task_line.add_point(to)
+func _update_line(from: Vector2, to: Vector2, is_snapped: bool):
+	_sad_task_line.visible = !is_snapped
+	_happy_task_line.visible = is_snapped
+	
+	var current_line = _happy_task_line if is_snapped else _sad_task_line
+	
+	current_line.clear_points()
+	current_line.add_point(from)
+	current_line.add_point(to)
 
 static func register_container(object):
 	_instance._containers.append(object)

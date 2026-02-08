@@ -1,17 +1,24 @@
 [gd_scene format=3 uid="uid://dgetbp07ibgk4"]
 
-[ext_resource type="Script" uid="uid://c3ptkgqng3bhe" path="res://factory.gd" id="1_qjjrk"]
+[ext_resource type="Script" uid="uid://hdyy2gmlhry7" path="res://factory/controllers/factory_controller.gd" id="1_bsidf"]
 [ext_resource type="PackedScene" uid="uid://bnrkjkqq2r07e" path="res://items/containers/salepoint/salepoint.tscn" id="2_br4io"]
 [ext_resource type="PackedScene" uid="uid://djpn06iha3lsn" path="res://items/containers/bin/bin.tscn" id="2_keyo3"]
+[ext_resource type="Shader" uid="uid://mluc7jc5alef" path="res://factory/line_move.gdshader" id="2_qqron"]
 [ext_resource type="PackedScene" uid="uid://be0fwocc67ek1" path="res://machines/processor/processor.tscn" id="2_y1mhp"]
+[ext_resource type="Texture2D" uid="uid://cy88fenjegl6v" path="res://factory/line.png" id="3_67ti3"]
 [ext_resource type="PackedScene" uid="uid://c6wc31vacw71o" path="res://items/containers/buypoint/buypoint.tscn" id="3_br4io"]
 [ext_resource type="PackedScene" uid="uid://c3nei1h8al2ba" path="res://workers/human/human.tscn" id="3_y1mhp"]
-[ext_resource type="Script" uid="uid://dr7g0gkj3jhdt" path="res://workers_controller.gd" id="6_h5ffw"]
-[ext_resource type="Texture2D" uid="uid://du72lytjcqdl7" path="res://selection.png" id="7_5iljq"]
-[ext_resource type="Script" uid="uid://ds8kjgnnpvxnm" path="res://factory_controller.gd" id="9_nb4f5"]
+[ext_resource type="Shader" uid="uid://cfgxmb6ufdak1" path="res://factory/blink.gdshader" id="4_tsdvb"]
+[ext_resource type="Script" uid="uid://dr7g0gkj3jhdt" path="res://factory/controllers/workers_controller.gd" id="6_h5ffw"]
+[ext_resource type="Texture2D" uid="uid://du72lytjcqdl7" path="res://factory/selection.png" id="7_5iljq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_67ti3"]
+shader = ExtResource("2_qqron")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vnvhg"]
+shader = ExtResource("4_tsdvb")
 
 [node name="Factory" type="Node2D" unique_id=329804466]
-script = ExtResource("1_qjjrk")
 
 [node name="Floor" type="Node2D" parent="." unique_id=2015018603]
 
@@ -23,19 +30,29 @@ size_flags_horizontal = 0
 mouse_filter = 1
 color = Color(0.28494582, 0.2046169, 0.1330407, 1)
 
-[node name="Controller" type="Node2D" parent="." unique_id=1605500241]
-script = ExtResource("9_nb4f5")
+[node name="FactoryController" type="Node2D" parent="." unique_id=1605500241]
+script = ExtResource("1_bsidf")
 
-[node name="WorkerController" type="Node2D" parent="Controller" unique_id=1776649459]
+[node name="SadTaskLine" type="Line2D" parent="FactoryController" unique_id=1036842692]
+position = Vector2(-1, 0)
+default_color = Color(0.4471208, 0.47713977, 0.48089617, 1)
+
+[node name="HappyTaskLine" type="Line2D" parent="FactoryController" unique_id=773090145]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_67ti3")
+texture = ExtResource("3_67ti3")
+texture_mode = 1
+
+[node name="WorkerController" type="Node2D" parent="FactoryController" unique_id=1776649459]
+position = Vector2(-98, -88)
 script = ExtResource("6_h5ffw")
 
-[node name="Selection" type="Node2D" parent="Controller/WorkerController" unique_id=76209110]
+[node name="Selection" type="Node2D" parent="FactoryController/WorkerController" unique_id=76209110]
+visible = false
 
-[node name="Selection2" type="Sprite2D" parent="Controller/WorkerController/Selection" unique_id=1693518090]
+[node name="Visual" type="Sprite2D" parent="FactoryController/WorkerController/Selection" unique_id=1693518090]
+material = SubResource("ShaderMaterial_vnvhg")
 texture = ExtResource("7_5iljq")
-
-[node name="TaskLine" type="Line2D" parent="Controller" unique_id=1036842692]
-position = Vector2(-1, 0)
 
 [node name="Objects" type="Node2D" parent="." unique_id=47912914]
 

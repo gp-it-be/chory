@@ -6,6 +6,9 @@ var _selected_worker = null
 
 @onready var selection_marker: Node2D = $Selection
 
+func _ready():
+	selection_marker.show()
+
 func register_worker(worker: Human) -> void:
 	_workers.append(worker)
 
