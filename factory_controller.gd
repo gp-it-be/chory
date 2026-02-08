@@ -35,7 +35,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	if event.is_action_released("click"):
 		_dragging = false
-		if _start_container and _end_container:
+		
+		if _start_container and _find_nearby(event.global_position) ==_start_container:
+			assert(_start_container.has_method("select"), "should probably only allow selecting selectables")
+			_start_container.select()
+		elif _start_container and _end_container:
 			assert(_start_container.has_method("as_provider") and _end_container.has_method("as_sink"), "Should probably keep containers in 2 lists and only allow starting from providers")
 			task_execution_requested.emit(
 				Human.MoveTask.new(_start_container.as_provider(), _end_container.as_sink(), _start_container.as_position(), _end_container.as_position())
@@ -50,8 +54,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_end_location = _end_container.global_position
 		else:
 			_end_location = event.global_position
-			
-	#_update_ui()
 
 func _start_container_updating(previous, new):
 	if previous:

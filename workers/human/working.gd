@@ -23,6 +23,9 @@ func work(task: Human.MoveTask):
 		Step.Deliver.new(task.to)
 	]
 	_current_step_index = 0
+	if _current_step_paused:
+		print("risky business, current step was paused will probably at some point unpause and cause bugs")
+	_current_step_paused = false
 
 
 func __process(delta: float):

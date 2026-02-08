@@ -5,15 +5,17 @@ signal stock_changed(count:int)
 var _stock = Inventory.new()
 var _item_type := Items.ItemType.FOO
 
+func select():
+	$UI.show()
 
 
-##TODO dit is nogal prototyperig. Ergens globaler de input regelen!
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.is_pressed():
-		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
-			if event.global_position.distance_squared_to(global_position) < 1000:
-				get_viewport().set_input_as_handled()
-				$UI.show()
+###TODO dit is nogal prototyperig. Ergens globaler de input regelen!
+#func _unhandled_input(event: InputEvent) -> void:
+	#if event is InputEventMouseButton and event.is_pressed():
+		#if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
+			#if event.global_position.distance_squared_to(global_position) < 1000:
+				#get_viewport().set_input_as_handled()
+				
 
 func _ready() -> void:
 	_stock.stock_changed.connect(func(value):
