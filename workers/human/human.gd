@@ -12,9 +12,14 @@ func _ready():
 
 #Not satisfied with ItemProvider and GlobalPosition being passed seperatly
 #Hoping I'll discover a way to improve this
-func give_task(from : ItemProvider, to:ItemSink, from_position: GlobalPosition, to_position: GlobalPosition ):
-	var task = MoveTask.new(from, to, from_position, to_position)
+func give_task(task: MoveTask):	
 	_state.give_task(task)
+
+func _accepting_tasks()-> bool:
+	return _state._accepting_tasks()
+	
+func abort_task():
+	_state.abort_task()
 
 func _process(delta: float) -> void:
 	_state.__process(delta)

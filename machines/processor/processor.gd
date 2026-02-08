@@ -41,6 +41,7 @@ func _ready():
 	update_debug()
 	_input_pile.stock_changed.connect(func(_a): update_debug())
 	_output_pile.stock_changed.connect(func(_a): update_debug())
+	FactoryController.register_container(self)
 
 #For the outside world, the input of the processor is where they can output the ingredients
 func as_sink():

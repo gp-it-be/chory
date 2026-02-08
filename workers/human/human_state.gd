@@ -7,3 +7,9 @@ func give_task(task :Human.MoveTask):
 
 func __process(delta:float):
 	pass
+
+func abort_task():
+	pass
+	
+func _accepting_tasks()-> bool:
+	return false

@@ -4,6 +4,7 @@ class_name SalePoint extends Node2D
 var _sink = ItemSink.wrap(self)
 
 func _ready() -> void:
+	FactoryController.register_container(self)
 	pass
 
 func as_sink():

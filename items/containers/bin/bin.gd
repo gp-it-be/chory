@@ -13,6 +13,7 @@ func _ready() -> void:
 		$Debug.text = str(value)
 		)
 	_stock.add(start_count, _item_type)
+	FactoryController.register_container(self)
 
 func as_provider():
 	return ItemProvider.wrap(_stock)

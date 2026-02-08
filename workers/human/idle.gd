@@ -5,3 +5,7 @@ func __process(delta: float) -> void:
 	
 func give_task(task :Human.MoveTask):
 	human.transition_to_working(task)
+
+
+func _accepting_tasks()-> bool:
+	return true

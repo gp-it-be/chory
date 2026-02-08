@@ -12,6 +12,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		if event.button_index == MouseButton.MOUSE_BUTTON_LEFT:
 			if event.global_position.distance_squared_to(global_position) < 1000:
+				get_viewport().set_input_as_handled()
 				$UI.show()
 
 func _ready() -> void:
@@ -22,6 +23,7 @@ func _ready() -> void:
 	_update_debug()
 	$UI.buy_requested.connect(buy)
 	_stock.add(1, Items.ItemType.FOO)
+	FactoryController.register_container(self)
 
 func buy():
 	##TODO de-prototype

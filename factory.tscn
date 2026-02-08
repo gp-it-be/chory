@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://be0fwocc67ek1" path="res://machines/processor/processor.tscn" id="2_y1mhp"]
 [ext_resource type="PackedScene" uid="uid://c6wc31vacw71o" path="res://items/containers/buypoint/buypoint.tscn" id="3_br4io"]
 [ext_resource type="PackedScene" uid="uid://c3nei1h8al2ba" path="res://workers/human/human.tscn" id="3_y1mhp"]
+[ext_resource type="Script" uid="uid://dr7g0gkj3jhdt" path="res://workers.gd" id="6_h5ffw"]
+[ext_resource type="Texture2D" uid="uid://du72lytjcqdl7" path="res://selection.png" id="7_5iljq"]
+[ext_resource type="Script" uid="uid://ds8kjgnnpvxnm" path="res://factory_controller.gd" id="9_nb4f5"]
 
 [node name="Factory" type="Node2D" unique_id=329804466]
 script = ExtResource("1_qjjrk")
@@ -19,6 +22,12 @@ offset_bottom = 1080.0
 size_flags_horizontal = 0
 mouse_filter = 1
 color = Color(0.28494582, 0.2046169, 0.1330407, 1)
+
+[node name="Controller" type="Node2D" parent="." unique_id=1605500241]
+script = ExtResource("9_nb4f5")
+
+[node name="TaskLine" type="Line2D" parent="Controller" unique_id=1036842692]
+position = Vector2(-1, 0)
 
 [node name="SalePoint" parent="." unique_id=903017345 instance=ExtResource("2_br4io")]
 position = Vector2(986, 498)
@@ -35,6 +44,12 @@ position = Vector2(508, 382)
 position = Vector2(901, 267)
 
 [node name="Workers" type="Node2D" parent="." unique_id=1776649459]
+script = ExtResource("6_h5ffw")
+
+[node name="Selection" type="Node2D" parent="Workers" unique_id=76209110]
+
+[node name="Selection2" type="Sprite2D" parent="Workers/Selection" unique_id=1693518090]
+texture = ExtResource("7_5iljq")
 
 [node name="Human" parent="Workers" unique_id=1770626819 instance=ExtResource("3_y1mhp")]
 position = Vector2(301, 328)
