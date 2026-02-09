@@ -3,7 +3,6 @@ class_name BuyPoint extends Node2D
 signal stock_changed(count:int) 
 
 var _stock = Inventory.new()
-var _item_type := Items.ItemType.FOO
 
 func select():
 	$UI.show()
@@ -19,14 +18,14 @@ func _ready() -> void:
 	_update_debug()
 	$UI.buy_requested.connect(buy)
 	$UI.close_requested.connect(unselect)
-	_stock.add(1, Items.ItemType.FOO)
+	_stock.add(1, Items.ItemType.CIRCLE)
 	FactoryController.register_container(self)
 
-func buy():
+func buy(itemType: Items.ItemType):
 	##TODO de-prototype
 	if Money.money >= 50:
 		Money.add_money(-50)
-		_stock.add(1, Items.ItemType.FOO)
+		_stock.add(1, itemType)
 	else:
 		pass #TODO give some feedback
 
@@ -40,4 +39,4 @@ func as_position():
 	return GlobalPosition.wrap(self)
 	
 func _update_debug():
-	$DebugLabel.text = str(_stock.count())
+	$DebugLabel.text = _stock.debug_string()

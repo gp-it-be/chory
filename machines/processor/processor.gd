@@ -24,18 +24,28 @@ func _process(delta: float) -> void:
 		return
 	
 	var result = _input.pickup(1)
-	if result == ItemProvider.PickupResult.FAILED: return
+	if result is Inventory.TakeResultNone: return
+	
+	var inserted_type = (result as Inventory.TakeResultSuccess).type
+	var output_type = processes_to(inserted_type)
+	print("converted ", Items.description_of(inserted_type), " to ", Items.description_of(output_type))
 	
 	#actual processing
 	_waiting = true
 	$Processing/AnimationPlayer.play("process_item")
 	await get_tree().create_timer(3).timeout
-	var deliver_result = _output.try_deliver(Items.ItemType.FOO)
+	var deliver_result = _output.try_deliver(output_type)
 	assert(deliver_result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full")
 	
 	$Processing/AnimationPlayer.play("RESET")
 	_waiting = false
 	
+
+func processes_to(type: Items.ItemType) -> Items.ItemType:
+	if type == Items.ItemType.CIRCLE: return Items.ItemType.TRIANGLE
+	if type == Items.ItemType.TRIANGLE: return Items.ItemType.CIRCLE
+	assert(false)
+	return Items.ItemType.CIRCLE
 
 func _ready():
 	update_debug()
@@ -55,5 +65,5 @@ func as_position():
 	return GlobalPosition.wrap(self)
 
 func update_debug():
-	$InputDebug.text = str(_input.item_count())
-	$OutputDebug.text = str(_output.item_count())
+	$InputDebug.text = _input_pile.debug_string()
+	$OutputDebug.text = _output_pile.debug_string()

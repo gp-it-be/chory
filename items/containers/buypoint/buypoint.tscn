@@ -50,4 +50,8 @@ layout_mode = 2
 
 [node name="BuyButton" type="Button" parent="UI/PanelContainer/VBoxContainer" unique_id=1974639985]
 layout_mode = 2
-text = "Buy 10"
+text = "Buy 1 Round"
+
+[node name="BuyTriangleButton" type="Button" parent="UI/PanelContainer/VBoxContainer" unique_id=1049631690]
+layout_mode = 2
+text = "Buy 1 Triangle"

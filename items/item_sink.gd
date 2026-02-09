@@ -23,7 +23,7 @@ static func wrap(object: Variant) -> ItemSink:
 	return sink
 
 func _validate_interface(obj: Variant):
-	_assert_obj_has_method(obj, "try_add", [typeof(1), typeof(Items.ItemType.FOO)], ["", "Items.ItemType"])
+	_assert_obj_has_method(obj, "try_add", [typeof(1), typeof(Items.ItemType.CIRCLE)], ["", "Items.ItemType"])
 	
 func _assert_obj_has_method(object: Variant, name: String, param_types: Array[Variant], param_type_class_names: Array[Variant]):
 	var methods :Array[Dictionary]= object.get_method_list()

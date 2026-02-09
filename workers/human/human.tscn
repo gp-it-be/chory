@@ -16,3 +16,7 @@ script = ExtResource("4_1cm3i")
 
 [node name="Working" type="Node2D" parent="Human" unique_id=614526033]
 script = ExtResource("5_avdb7")
+
+[node name="DebugLabel" type="Label" parent="." unique_id=948076557]
+offset_right = 40.0
+offset_bottom = 23.0

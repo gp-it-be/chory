@@ -12,10 +12,8 @@ static func wrap(object: Variant) -> ItemProvider:
 	return provider
 
 
-func pickup(amount: int) -> PickupResult:
-	if _real_object.try_take(amount):
-		return PickupResult.SUCCESS
-	return PickupResult.FAILED
+func pickup(amount: int) -> Inventory.TakeResult:
+	return _real_object.try_take(amount)
 	
 func item_count():
 	return _real_object.count()
@@ -34,6 +32,8 @@ func _validate_interface(obj: Variant):
 	
 	assert(has, "Does not respect the interface")
 
+
+#TODO no longer needed?
 enum PickupResult {
 	SUCCESS,
 	FAILED
