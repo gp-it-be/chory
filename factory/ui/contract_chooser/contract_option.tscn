@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ds75y65q8g036"]
+
+[ext_resource type="Script" uid="uid://cactwpxo0ubxk" path="res://factory/ui/contract_chooser/contract_option.gd" id="1_d8fhy"]
+
+[node name="ContractOption" type="PanelContainer" unique_id=1758305106]
+custom_minimum_size = Vector2(100, 150)
+script = ExtResource("1_d8fhy")
+
+[node name="Panel" type="Panel" parent="." unique_id=1157346691]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=635138365]
+layout_mode = 0
+offset_right = 65.0
+offset_bottom = 85.0
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=2122645423]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Bliep"
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer" unique_id=406171089]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Bliep"
+
+[node name="Button" type="Button" parent="Panel/VBoxContainer" unique_id=1688805961]
+layout_mode = 2
+text = "Choose"

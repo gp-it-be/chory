@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://dgetbp07ibgk4"]
 
+[ext_resource type="Script" uid="uid://cbb38s2b478u4" path="res://factory/ui/ui.gd" id="1_8p6y5"]
 [ext_resource type="Script" uid="uid://hdyy2gmlhry7" path="res://factory/controllers/factory_controller.gd" id="1_bsidf"]
 [ext_resource type="PackedScene" uid="uid://bnrkjkqq2r07e" path="res://items/containers/salepoint/salepoint.tscn" id="2_br4io"]
 [ext_resource type="PackedScene" uid="uid://djpn06iha3lsn" path="res://items/containers/bin/bin.tscn" id="2_keyo3"]
 [ext_resource type="Shader" uid="uid://mluc7jc5alef" path="res://factory/line_move.gdshader" id="2_qqron"]
+[ext_resource type="Texture2D" uid="uid://cij18ek0ywq0u" path="res://icon.svg" id="2_qrq2b"]
 [ext_resource type="PackedScene" uid="uid://be0fwocc67ek1" path="res://machines/processor/processor.tscn" id="2_y1mhp"]
 [ext_resource type="Texture2D" uid="uid://cy88fenjegl6v" path="res://factory/line.png" id="3_67ti3"]
 [ext_resource type="PackedScene" uid="uid://c6wc31vacw71o" path="res://items/containers/buypoint/buypoint.tscn" id="3_br4io"]
@@ -11,6 +13,7 @@
 [ext_resource type="Shader" uid="uid://cfgxmb6ufdak1" path="res://factory/blink.gdshader" id="4_tsdvb"]
 [ext_resource type="Script" uid="uid://dr7g0gkj3jhdt" path="res://factory/controllers/workers_controller.gd" id="6_h5ffw"]
 [ext_resource type="Texture2D" uid="uid://du72lytjcqdl7" path="res://factory/selection.png" id="7_5iljq"]
+[ext_resource type="Script" uid="uid://ybx7anserftw" path="res://factory/contracts.gd" id="14_qrq2b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_67ti3"]
 shader = ExtResource("2_qqron")
@@ -29,6 +32,28 @@ offset_bottom = 1080.0
 size_flags_horizontal = 0
 mouse_filter = 1
 color = Color(0.28494582, 0.2046169, 0.1330407, 1)
+
+[node name="UI" type="Control" parent="Floor/ColorRect" unique_id=444361828]
+top_level = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_8p6y5")
+
+[node name="OpenContractsButton" type="TextureButton" parent="Floor/ColorRect/UI" unique_id=2120232421]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+texture_normal = ExtResource("2_qrq2b")
 
 [node name="FactoryController" type="Node2D" parent="." unique_id=1605500241]
 script = ExtResource("1_bsidf")
@@ -79,3 +104,7 @@ position = Vector2(257, 83)
 
 [node name="Buypoint2" parent="Objects" unique_id=1957234794 instance=ExtResource("3_br4io")]
 position = Vector2(161, 482)
+
+[node name="Contracts" type="Node2D" parent="." unique_id=845282663 node_paths=PackedStringArray("ui")]
+script = ExtResource("14_qrq2b")
+ui = NodePath("../Floor/ColorRect/UI")

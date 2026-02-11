@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c318uqpiv2k6j"]
+
+[ext_resource type="Script" uid="uid://bseeijl2qt6px" path="res://factory/ui/contract_chooser/contract_chooser.gd" id="1_qecym"]
+
+[node name="ContractChooser" type="CenterContainer" unique_id=1279492146]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qecym")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1379519979]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=769577720]
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1425564882]
+layout_mode = 2
+text = "X"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=260970100]
+layout_mode = 2
