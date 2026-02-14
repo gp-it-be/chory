@@ -12,6 +12,7 @@ func unselect():
 
 func _ready() -> void:
 	_stock.stock_changed.connect(func(value):
+		print("TODO ", value, " is probably not of array type")
 		stock_changed.emit(value)
 		_update_debug()
 		)

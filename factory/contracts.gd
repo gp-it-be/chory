@@ -1,9 +1,12 @@
 class_name ContractManager extends Node2D
 
 @export var ui : UI
-
+@export var contract_point : ContractPoint
+var _contract_point_as_provider
 
 var _active_contracts = []
+
+
 
 ##temp logic
 var time_to_contract := 1.0
@@ -14,6 +17,9 @@ func _ready():
 		_active_contracts.append("TODO map to a class that tracks a contract by being connected to a contract inventory BIN")
 		print("accepted contract for %s" % choice.name)
 		)
+	_contract_point_as_provider = contract_point.as_provider()
+	#ZO, of eerder de contracten hier rechtstreeks mee connecten?? !!
+	_contract_point_as_provider.item_counts_changed.connect(_on_available_items_changed)
 
 
 #Temporary trigger to offer a contract choice

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://yn4gtv0tfknp"]
+
+[ext_resource type="Script" uid="uid://cc1iq0omye7ph" path="res://items/containers/contract_point/contract_point.gd" id="1_obr8l"]
+[ext_resource type="Texture2D" uid="uid://bau5mjc006fwu" path="res://items/containers/contract_point/contractpoint.png" id="2_v3e8g"]
+
+[node name="ContractPoint" type="Node2D" unique_id=1260428077]
+script = ExtResource("1_obr8l")
+
+[node name="Contractpoint" type="Sprite2D" parent="." unique_id=1111913729]
+texture = ExtResource("2_v3e8g")

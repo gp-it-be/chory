@@ -13,6 +13,7 @@
 [ext_resource type="Shader" uid="uid://cfgxmb6ufdak1" path="res://factory/blink.gdshader" id="4_tsdvb"]
 [ext_resource type="Script" uid="uid://dr7g0gkj3jhdt" path="res://factory/controllers/workers_controller.gd" id="6_h5ffw"]
 [ext_resource type="Texture2D" uid="uid://du72lytjcqdl7" path="res://factory/selection.png" id="7_5iljq"]
+[ext_resource type="PackedScene" uid="uid://yn4gtv0tfknp" path="res://items/containers/contract_point/contract_point.tscn" id="14_p0nyj"]
 [ext_resource type="Script" uid="uid://ybx7anserftw" path="res://factory/contracts.gd" id="14_qrq2b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_67ti3"]
@@ -103,9 +104,13 @@ position = Vector2(986, 498)
 [node name="Buypoint" parent="Objects" unique_id=667913321 instance=ExtResource("3_br4io")]
 position = Vector2(257, 83)
 
+[node name="ContractPoint" parent="Objects" unique_id=1260428077 instance=ExtResource("14_p0nyj")]
+position = Vector2(1345, 117)
+
 [node name="Buypoint2" parent="Objects" unique_id=1957234794 instance=ExtResource("3_br4io")]
 position = Vector2(161, 482)
 
-[node name="Contracts" type="Node2D" parent="." unique_id=845282663 node_paths=PackedStringArray("ui")]
+[node name="Contracts" type="Node2D" parent="." unique_id=845282663 node_paths=PackedStringArray("ui", "contract_point")]
 script = ExtResource("14_qrq2b")
 ui = NodePath("../Floor/ColorRect/UI")
+contract_point = NodePath("../Objects/ContractPoint")
