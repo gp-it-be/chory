@@ -1,6 +1,7 @@
 class_name UI extends Control
 
 const CONTRACT_CHOOSER = preload("uid://c318uqpiv2k6j")
+const CONTRACT_TRACKER = preload("uid://csvkwgynk7sie")
 signal choice_made(contract_choice: ContractChooser.ContractBluePrint)
 
 
@@ -31,3 +32,9 @@ func _contract_choices_updated():
 func open_contracts():
 	$OpenContractsButton.hide()
 	_chooser.visible = true
+
+	
+func track(contract: Contract):
+	var tracker = CONTRACT_TRACKER.instantiate()
+	tracker.init_tracker(contract)
+	%ContractTrackers.add_child(tracker)

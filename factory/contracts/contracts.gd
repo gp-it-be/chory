@@ -13,13 +13,16 @@ var time_to_contract := 1.0
 var has_emitted = false
 
 func _ready():
-	ui.choice_made.connect(func(choice: ContractChooser.ContractBluePrint):
-		_active_contracts.append("TODO map to a class that tracks a contract by being connected to a contract inventory BIN")
-		print("accepted contract for %s" % choice.name)
-		)
 	_contract_point_as_provider = contract_point.as_provider()
-	#ZO, of eerder de contracten hier rechtstreeks mee connecten?? !!
-	_contract_point_as_provider.item_counts_changed.connect(_on_available_items_changed)
+
+	ui.choice_made.connect(func(choice: ContractChooser.ContractBluePrint):
+		print("accepted contract for %s" % choice.name)
+		var quantities: Dictionary[Items.ItemType, int] = {Items.ItemType.CIRCLE: 4, Items.ItemType.TRIANGLE: 2}
+		var contract = Contract.new(_contract_point_as_provider, quantities)
+		_active_contracts.append(contract)
+		ui.track(contract)
+	)
+
 
 
 #Temporary trigger to offer a contract choice

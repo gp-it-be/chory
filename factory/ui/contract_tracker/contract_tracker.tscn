@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://csvkwgynk7sie"]
+
+[ext_resource type="Script" uid="uid://dpck25luxt04o" path="res://factory/ui/contract_tracker/contract_tracker.gd" id="1_4ugfk"]
+
+[node name="PanelContainer" type="PanelContainer" unique_id=1798445299]
+offset_top = 35.0
+offset_right = 18.0
+offset_bottom = 35.0
+script = ExtResource("1_4ugfk")
+
+[node name="ContractTracker" type="VBoxContainer" parent="." unique_id=1037094148]
+layout_mode = 2
+
+[node name="CompleteButton" type="Button" parent="ContractTracker" unique_id=94705275]
+layout_mode = 2
+text = "V"
