@@ -50,7 +50,7 @@ func process_finishes_current_step(delta: float) -> bool:
 		var picked_up = _pickup_item(step.from)
 		if not picked_up:
 			_current_step_paused = true
-			await step.from.wait_for_at_least_items_available(1)
+			await step.from.wait_for_at_least_items_available(1, Items.AcceptAll.new())
 			##TODO verify the current step is still the same (maybe some GUID?)
 			#during wait this could have been aborted and then given a new state
 			#ORR: recreate state node?
@@ -64,7 +64,8 @@ func process_finishes_current_step(delta: float) -> bool:
 func _pickup_item(from:ItemProvider):
 	var take_result = from.pickup(1)
 	if take_result is Inventory.TakeResultSuccess:
-		human.inventory.add(take_result.count,take_result.type)
+		assert(take_result.counts.size() == 1)
+		var result = human.inventory.try_add(take_result.counts.values()[0], take_result.counts.keys()[0])
 		return true
 	else: 
 		return false
@@ -73,8 +74,8 @@ func _deliver_item(to: ItemSink):
 	var human_item = human.inventory.try_take(1)
 	assert(human_item is Inventory.TakeResultSuccess)
 	
-	var result = to.try_deliver((human_item as Inventory.TakeResultSuccess).type)
-	assert(result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full")
+	var result = to.try_deliver((human_item as Inventory.TakeResultSuccess).counts)
+	assert(result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full (wait for stock change and retry?)")
 	
 
 func _near(global :GlobalPosition):

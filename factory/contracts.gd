@@ -2,6 +2,7 @@ class_name ContractManager extends Node2D
 
 @export var ui : UI
 
+
 var _active_contracts = []
 
 ##temp logic
@@ -11,7 +12,7 @@ var has_emitted = false
 func _ready():
 	ui.choice_made.connect(func(choice: ContractChooser.ContractBluePrint):
 		_active_contracts.append("TODO map to a class that tracks a contract by being connected to a contract inventory BIN")
-		print("accepted contrqct for %s" % choice.name)
+		print("accepted contract for %s" % choice.name)
 		)
 
 

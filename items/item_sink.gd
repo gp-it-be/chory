@@ -4,13 +4,10 @@ var _real_object: Variant:
 	set(value):
 		_validate_interface(value)
 		_real_object = value
-
-func deliver(type: Items.ItemType):
-	assert(false,"deprecated")
-	_real_object.add(1, type)
 	
-func try_deliver(type: Items.ItemType) -> DeliverResult:
-	if _real_object.try_add(1, type):
+func try_deliver(counts: Dictionary[Items.ItemType, int]) -> DeliverResult:
+	assert(counts.size() == 1, "Implement more than 1 type at once. Deliver what fits?")
+	if _real_object.try_add(counts.values()[0], counts.keys()[0]):
 		return DeliverResult.SUCCESS
 	return DeliverResult.FAILED
 

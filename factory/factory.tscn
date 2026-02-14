@@ -95,6 +95,7 @@ position = Vector2(508, 382)
 
 [node name="Bin3" parent="Objects" unique_id=1922040310 instance=ExtResource("2_keyo3")]
 position = Vector2(901, 267)
+start_count = null
 
 [node name="SalePoint" parent="Objects" unique_id=903017345 instance=ExtResource("2_br4io")]
 position = Vector2(986, 498)

@@ -1,7 +1,6 @@
 class_name Bin extends Node2D 
 #Only fits one type of item
 
-
 signal stock_changed(count:int) 
 
 var _stock = Inventory.new()
@@ -13,7 +12,7 @@ func _ready() -> void:
 		stock_changed.emit(value)
 		$Debug.text = _stock.debug_string()
 		)
-	_stock.add(start_count, Items.ItemType.CIRCLE)
+	_stock.try_add(start_count, Items.ItemType.CIRCLE)
 	FactoryController.register_container(self)
 
 func as_provider():
