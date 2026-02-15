@@ -1,7 +1,5 @@
 class_name BuyPoint extends Node2D 
 
-signal stock_changed(count:int) 
-
 var _stock = Inventory.new()
 
 func select():
@@ -12,8 +10,6 @@ func unselect():
 
 func _ready() -> void:
 	_stock.stock_changed.connect(func(value):
-		print("TODO ", value, " is probably not of array type")
-		stock_changed.emit(value)
 		_update_debug()
 		)
 	_update_debug()

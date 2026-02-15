@@ -38,10 +38,3 @@ func _validate_interface(obj: Variant):
 	#TODO validate has signal changed
 	
 	assert(has, "Does not respect the interface")
-
-
-#TODO no longer needed?
-enum PickupResult {
-	SUCCESS,
-	FAILED
-}
