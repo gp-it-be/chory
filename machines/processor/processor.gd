@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 		_waiting = false
 		return
 	
-	var result = _input.pickup(1)
+	var result = _input.pickup_upto(1,  Items.AcceptAll.new())
 	if result is Inventory.TakeResultNone: return
 	
 	assert(result.counts.get_types().size() == 1, "this worked when taking 1 item from input")

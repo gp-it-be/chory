@@ -62,7 +62,7 @@ func process_finishes_current_step(delta: float) -> bool:
 
 
 func _pickup_item(from:ItemProvider):
-	var take_result = from.pickup(1)
+	var take_result = from.pickup_upto(1, Items.AcceptAll.new())
 	if take_result is Inventory.TakeResultSuccess:
 		assert(take_result.counts.get_types().size() == 1)
 		var result = human.inventory.try_add(take_result.counts.get_values()[0], take_result.counts.get_types()[0])
@@ -71,7 +71,7 @@ func _pickup_item(from:ItemProvider):
 		return false
 
 func _deliver_item(to: ItemSink):
-	var human_item = human.inventory.try_take(1)
+	var human_item = human.inventory.pickup_upto(1, Items.AcceptAll.new())
 	assert(human_item is Inventory.TakeResultSuccess)
 	
 	var result = to.try_deliver((human_item as Inventory.TakeResultSuccess).counts)

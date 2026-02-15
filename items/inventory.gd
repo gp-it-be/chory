@@ -5,29 +5,23 @@ signal stock_changed(counts: Items.Quantities)
 
 var _counts : Items.Quantities = Items.Quantities.new()
 
-func try_take(amount: int) -> TakeResult:
-	print("TODO i should rework this to either use try_take_all_or_nothing, or be try_take_upto")
-	print("")
-	print("Starting to take ", amount)
-	print("This many in total present: ", count(Items.AcceptAll.new()))
-	print("Being ", _counts)
+
+func pickup_upto(amount: int, filter: Items.ItemFilter) -> Inventory.TakeResult:
+	if _counts.empty(): return TakeResultNone.new()
 	
-	if count(Items.AcceptAll.new()) >= amount:
-		var total_taken = 0
-		var taken : Items.Quantities = Items.Quantities.new()
-		for type in _counts.get_types():
-			var type_taken = min(amount - total_taken, _counts.get_count(type))
-			_counts.set_count(type, _counts.get_count(type) - type_taken)
-			print("Took ", type_taken, " of ", type)
-			total_taken += type_taken
-			taken.set_count(type, type_taken)
-			if(total_taken == amount):
-				stock_changed.emit(_counts)
-				return TakeResultSuccess.new(taken)
-		assert(false, "cant get here")
+	var still_to_take = amount
+	var taken : Items.Quantities = Items.Quantities.new()
+	for type in _counts.get_types():
+		var type_taken = min(still_to_take, _counts.get_count(type))
+		_counts.reduce_count(type, type_taken)
+		print("Took ", type_taken, " of ", type)
+		still_to_take -= type_taken
+		taken.set_count(type, type_taken)
+		if(still_to_take == 0):
+			stock_changed.emit(_counts)
+			return TakeResultSuccess.new(taken)
 		
-	return TakeResultNone.new()
-	
+	return TakeResultSuccess.new(taken)
 	
 func try_take_all_or_nothing(to_take: Items.Quantities) -> TakeResult:
 	if _counts.has_all(to_take):
@@ -46,6 +40,18 @@ func try_add(amount: int, type: Items.ItemType) -> bool: #wether adding was succ
 	stock_changed.emit(_counts)
 	return true	
 	
+	
+func try_add_all_or_nothing(to_add: Items.Quantities) -> bool: #wether adding was succesful
+	if to_add.empty(): return true
+	var added = _counts.with_added(to_add)
+	if not allow_multiple_types_together:
+		if added.get_types().size() > 1:
+			print("Couldnt add because theres items of different type")
+			return false
+	_counts = added
+	stock_changed.emit(_counts)
+	return true	
+	
 func count(filter: Items.ItemFilter) -> int:
 	return filter.amount_matching(_counts)
 
@@ -58,8 +64,8 @@ func wait_for_at_least(amount : int, filter: Items.ItemFilter):
 func debug_string():
 	return "%s" % _counts
 	
-@abstract	
-class TakeResult:	
+@abstract
+class TakeResult:
 	pass
 	
 class TakeResultSuccess extends TakeResult:

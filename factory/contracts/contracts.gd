@@ -19,6 +19,7 @@ func _ready():
 		var contract = Contract.new(_contract_point_as_provider, quantities)
 		_active_contracts.append(contract)
 		ui.track(contract)
+		contract.emit_current_progress()
 	)
 	
 	ui.contract_complete_requested.connect(_complete_contract)

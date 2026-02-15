@@ -33,7 +33,6 @@ func open_contracts():
 	$OpenContractsButton.hide()
 	_chooser.visible = true
 
-
 var _tracked_contracts = {}
 func track(contract: Contract):
 	var tracker = CONTRACT_TRACKER.instantiate() as ContractTracker

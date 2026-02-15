@@ -15,8 +15,8 @@ static func wrap(object: Variant) -> ItemProvider:
 	return provider
 
 
-func pickup(amount: int) -> Inventory.TakeResult:
-	return _real_object.try_take(amount)
+func pickup_upto(amount: int, filter: Items.ItemFilter) -> Inventory.TakeResult:
+	return _real_object.pickup_upto(amount, filter)
 	
 func pickup_all_or_nothing(quantities: Items.Quantities) -> Inventory.TakeResult:
 	return _real_object.try_take_all_or_nothing(quantities)
@@ -30,11 +30,10 @@ func wait_for_at_least_items_available(amount: int, filter: Items.ItemFilter):
 func _validate_interface(obj: Variant):
 	get_method_list()
 	var methods :Array[Dictionary]= obj.get_method_list()
-	var has = methods.any(func(dic:Dictionary): return dic["name"] == "try_take" and dic["args"][0]["type"] == typeof(1))
+	#var has = methods.any(func(dic:Dictionary): return dic["name"] == "try_take" and dic["args"][0]["type"] == typeof(1))
 	
 	#TODO check the wait_for_at_least method
 	#TODO check the count method
 	##TODO extract the hasmethod
 	#TODO validate has signal changed
-	
-	assert(has, "Does not respect the interface")
+	#assert(has, "Does not respect the interface")

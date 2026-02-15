@@ -14,6 +14,7 @@ static func description_of(type) -> String:
 	return "TODO"
 
 
+##dont add signals on this class. it is not long lived enough since it has with_... functions
 class Quantities:
 	var _data: Dictionary[Items.ItemType, int] = {}
 	
@@ -23,9 +24,16 @@ class Quantities:
 	func get_count(type: Items.ItemType) -> int:
 		return _data.get(type, 0)
 	
+	func add_count(type: Items.ItemType, amount: int) -> void:
+		set_count(type, get_count(type) + amount)
+	
+	func reduce_count(type: Items.ItemType, amount: int) -> void:
+		set_count(type, get_count(type) - amount)
+	
 	func set_count(type: Items.ItemType, amount: int) -> void:
 		_data[type] = max(0, amount)
 	
+	## the types with at least 1 item
 	func get_types() -> Array[Items.ItemType]:
 		var types: Array[Items.ItemType] = []
 		for type in _data.keys():
@@ -52,12 +60,23 @@ class Quantities:
 	
 	func total() -> int:
 		return get_values().reduce(func(accum, number): return accum + number, 0)
+		
+	func empty():
+		return total() == 0
 
 	func _to_string() -> String:
 		var parts: Array[String] = []
 		for type in get_types():
 			parts.append("%s: %d" % [Items.description_of(type), get_count(type)])
 		return "{%s}" % ", ".join(parts)
+	
+	
+	##Does not mutate, rather returns a new Quantities representing the addition
+	func with_added(other: Quantities) -> Quantities:
+		var result = Quantities.new(_data.duplicate())
+		for type in other.get_types():
+			result.set_count(type, result.get_count(type) + other.get_count(type))
+		return result
 
 
 @abstract class ItemFilter:
