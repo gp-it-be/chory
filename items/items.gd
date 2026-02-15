@@ -14,11 +14,38 @@ static func description_of(type) -> String:
 	return "TODO"
 
 
+class Quantities:
+	var _data: Dictionary[Items.ItemType, int] = {}
+	
+	func _init(dict: Dictionary[Items.ItemType, int] = {}):
+		_data = dict.duplicate()
+	
+	func get_count(type: Items.ItemType) -> int:
+		return _data.get(type, 0)
+	
+	func set_count(type: Items.ItemType, amount: int) -> void:
+		_data[type] = amount
+	
+	func get_types() -> Array[Items.ItemType]:
+		var types: Array[Items.ItemType] = []
+		for type in _data.keys():
+			if _data[type] > 0:
+				types.append(type)
+		return types
+	
+	func get_values() -> Array[int]:
+		var values: Array[int] = []
+		for value in _data.values():
+			values.append(value)
+		return values
+	
+	func total() -> int:
+		return get_values().reduce(func(accum, number): return accum + number, 0)
+
+
 
 @abstract class ItemFilter:
-	#@abstract func filter(counts: Dictionary[Items.ItemType, int]) -> Dictionary[Items.ItemType, int]
-	@abstract func amount_matching(counts: Dictionary[Items.ItemType, int]) -> int
-	pass
+	@abstract func amount_matching(counts: Items.Quantities) -> int
 	
 class AcceptTypes extends ItemFilter:
 	var _types: Array[Items.ItemType]
@@ -26,17 +53,13 @@ class AcceptTypes extends ItemFilter:
 	func _init(__types: Array[Items.ItemType]):
 		_types = __types
 		
-	func amount_matching(counts: Dictionary[Items.ItemType, int]) -> int:
+	func amount_matching(counts: Items.Quantities) -> int:
 		var sum = 0
-		for type in counts:
+		for type in counts.get_types():
 			if _types.has(type):
-				sum += counts[type]
+				sum += counts.get_count(type)
 		return sum
 	
 class AcceptAll extends ItemFilter:
-	func amount_matching(counts: Dictionary[Items.ItemType, int]) -> int:
-		return counts.values().reduce(sum, 0)
-
-
-	func sum(accum, number):
-		return accum + number
+	func amount_matching(counts: Items.Quantities) -> int:
+		return counts.total()

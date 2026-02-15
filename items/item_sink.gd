@@ -5,9 +5,11 @@ var _real_object: Variant:
 		_validate_interface(value)
 		_real_object = value
 	
-func try_deliver(counts: Dictionary[Items.ItemType, int]) -> DeliverResult:
-	assert(counts.size() == 1, "Implement more than 1 type at once. Deliver what fits?")
-	if _real_object.try_add(counts.values()[0], counts.keys()[0]):
+func try_deliver(counts: Items.Quantities) -> DeliverResult:
+	var types = counts.get_types()
+	var values = counts.get_values()
+	assert(types.size() == 1, "Implement more than 1 type at once. Deliver what fits?")
+	if _real_object.try_add(values[0], types[0]):
 		return DeliverResult.SUCCESS
 	return DeliverResult.FAILED
 

@@ -64,8 +64,8 @@ func process_finishes_current_step(delta: float) -> bool:
 func _pickup_item(from:ItemProvider):
 	var take_result = from.pickup(1)
 	if take_result is Inventory.TakeResultSuccess:
-		assert(take_result.counts.size() == 1)
-		var result = human.inventory.try_add(take_result.counts.values()[0], take_result.counts.keys()[0])
+		assert(take_result.counts.get_types().size() == 1)
+		var result = human.inventory.try_add(take_result.counts.get_values()[0], take_result.counts.get_types()[0])
 		return true
 	else: 
 		return false

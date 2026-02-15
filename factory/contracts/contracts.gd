@@ -2,11 +2,9 @@ class_name ContractManager extends Node2D
 
 @export var ui : UI
 @export var contract_point : ContractPoint
-var _contract_point_as_provider
+var _contract_point_as_provider: ItemProvider
 
 var _active_contracts = []
-
-
 
 ##temp logic
 var time_to_contract := 1.0
@@ -17,11 +15,27 @@ func _ready():
 
 	ui.choice_made.connect(func(choice: ContractChooser.ContractBluePrint):
 		print("accepted contract for %s" % choice.name)
-		var quantities: Dictionary[Items.ItemType, int] = {Items.ItemType.CIRCLE: 4, Items.ItemType.TRIANGLE: 2}
+		var quantities: Items.Quantities = Items.Quantities.new({Items.ItemType.CIRCLE: 4, Items.ItemType.TRIANGLE: 2})
 		var contract = Contract.new(_contract_point_as_provider, quantities)
 		_active_contracts.append(contract)
 		ui.track(contract)
 	)
+	
+	ui.contract_complete_requested.connect(_complete_contract)
+	
+func _complete_contract(contract: Contract):
+	if(not _active_contracts.has(contract)): 
+		push_warning("Tried to complete a contract that isnt active")
+		return
+	##TODO dont just pickup 1, make a pickup_all_or_nothing(quantities)
+	if _contract_point_as_provider.pickup(1) is Inventory.TakeResultSuccess:
+	#if _contract_point_as_provider.pickup(contract.needed_quantities) is Inventory.TakeResultSuccess:
+		print("TODO reward player")
+		_active_contracts.erase(contract)
+		ui.stop_tracking(contract)
+		
+	
+
 
 
 

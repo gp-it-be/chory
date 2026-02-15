@@ -46,6 +46,7 @@ mouse_filter = 1
 script = ExtResource("1_8p6y5")
 
 [node name="PanelContainer" type="PanelContainer" parent="Floor/ColorRect/UI" unique_id=2052429744]
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 1765.0
 offset_top = 148.0

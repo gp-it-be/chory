@@ -26,8 +26,8 @@ func _process(delta: float) -> void:
 	var result = _input.pickup(1)
 	if result is Inventory.TakeResultNone: return
 	
-	assert(result.counts.size() == 1, "this worked when taking 1 item from input")
-	var inserted_type = (result as Inventory.TakeResultSuccess).counts.keys()[0]
+	assert(result.counts.get_types().size() == 1, "this worked when taking 1 item from input")
+	var inserted_type = (result as Inventory.TakeResultSuccess).counts.get_types()[0]
 	var output_type = processes_to(inserted_type)
 	print("converted ", Items.description_of(inserted_type), " to ", Items.description_of(output_type))
 	
@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 	_waiting = true
 	$Processing/AnimationPlayer.play("process_item")
 	await get_tree().create_timer(3).timeout
-	var deliver_result = _output.try_deliver({output_type: 1})
+	var deliver_result = _output.try_deliver(Items.Quantities.new({output_type: 1}))
 	assert(deliver_result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full")
 	
 	$Processing/AnimationPlayer.play("RESET")

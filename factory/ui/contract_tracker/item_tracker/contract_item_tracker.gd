@@ -3,7 +3,7 @@ class_name ContractItemTracker extends Control
 signal fill_changed(is_filled:bool)
 
 var needed : int
-@onready var progress_bar: ProgressBar = $ProgressBar
+@onready var progress_bar: ProgressBar = %ProgressBar
 
 var _filled:bool:
 	set(value):

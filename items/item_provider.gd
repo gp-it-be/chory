@@ -1,6 +1,6 @@
 class_name ItemProvider
 
-signal item_counts_changed(counts: Dictionary[Items.ItemType, int])
+signal item_counts_changed(counts: Items.Quantities)
 
 var _real_object: Variant:
 	set(value):

@@ -4,23 +4,27 @@
 [ext_resource type="Texture2D" uid="uid://dsv8i0eeqklfx" path="res://factory/ui/contract_tracker/item_tracker/item.png" id="2_jg6qh"]
 
 [node name="ContractItemTracker" type="Control" unique_id=678157567]
-custom_minimum_size = Vector2(100, 30)
+custom_minimum_size = Vector2(150, 30)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 4.0
-offset_bottom = 27.0
+offset_right = 100.0
+offset_bottom = 30.0
 script = ExtResource("1_nu730")
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=1463543570]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 11
+anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
+offset_left = -4.0
+grow_horizontal = 0
 grow_vertical = 2
 show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=816493096]
-position = Vector2(-14, 14)
+position = Vector2(14, 15)
 scale = Vector2(0.451671, 0.451671)
 texture = ExtResource("2_jg6qh")
