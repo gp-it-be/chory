@@ -24,7 +24,7 @@ class Quantities:
 		return _data.get(type, 0)
 	
 	func set_count(type: Items.ItemType, amount: int) -> void:
-		_data[type] = amount
+		_data[type] = max(0, amount)
 	
 	func get_types() -> Array[Items.ItemType]:
 		var types: Array[Items.ItemType] = []
@@ -39,9 +39,25 @@ class Quantities:
 			values.append(value)
 		return values
 	
+	func has_all(other: Quantities) -> bool:
+		for type in other.get_types():
+			if get_count(type) < other.get_count(type):
+				return false
+		return true
+		
+	##removes as much as possible, up to other per type.
+	func remove(other: Quantities):
+		for type in other.get_types():
+			set_count(type, get_count(type) - other.get_count(type))
+	
 	func total() -> int:
 		return get_values().reduce(func(accum, number): return accum + number, 0)
 
+	func _to_string() -> String:
+		var parts: Array[String] = []
+		for type in get_types():
+			parts.append("%s: %d" % [Items.description_of(type), get_count(type)])
+		return "{%s}" % ", ".join(parts)
 
 
 @abstract class ItemFilter:

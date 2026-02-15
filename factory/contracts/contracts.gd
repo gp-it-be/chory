@@ -27,9 +27,7 @@ func _complete_contract(contract: Contract):
 	if(not _active_contracts.has(contract)): 
 		push_warning("Tried to complete a contract that isnt active")
 		return
-	##TODO dont just pickup 1, make a pickup_all_or_nothing(quantities)
-	if _contract_point_as_provider.pickup(1) is Inventory.TakeResultSuccess:
-	#if _contract_point_as_provider.pickup(contract.needed_quantities) is Inventory.TakeResultSuccess:
+	if _contract_point_as_provider.pickup_all_or_nothing(contract.needed_quantities) is Inventory.TakeResultSuccess:
 		print("TODO reward player")
 		_active_contracts.erase(contract)
 		ui.stop_tracking(contract)

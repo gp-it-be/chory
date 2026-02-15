@@ -6,7 +6,7 @@ signal stock_changed(counts: Items.Quantities)
 var _counts : Items.Quantities = Items.Quantities.new()
 
 func try_take(amount: int) -> TakeResult:
-	print("")
+	print("TODO i should rework this to either use try_take_all_or_nothing, or be try_take_upto")
 	print("")
 	print("Starting to take ", amount)
 	print("This many in total present: ", count(Items.AcceptAll.new()))
@@ -26,6 +26,14 @@ func try_take(amount: int) -> TakeResult:
 				return TakeResultSuccess.new(taken)
 		assert(false, "cant get here")
 		
+	return TakeResultNone.new()
+	
+	
+func try_take_all_or_nothing(to_take: Items.Quantities) -> TakeResult:
+	if _counts.has_all(to_take):
+		_counts.remove(to_take)
+		stock_changed.emit(_counts)
+		return TakeResultSuccess.new(to_take)
 	return TakeResultNone.new()
 	
 func try_add(amount: int, type: Items.ItemType) -> bool: #wether adding was succesful

@@ -18,6 +18,9 @@ static func wrap(object: Variant) -> ItemProvider:
 func pickup(amount: int) -> Inventory.TakeResult:
 	return _real_object.try_take(amount)
 	
+func pickup_all_or_nothing(quantities: Items.Quantities) -> Inventory.TakeResult:
+	return _real_object.try_take_all_or_nothing(quantities)
+	
 func item_count(filter: Items.ItemFilter):
 	return _real_object.count(filter)
 
