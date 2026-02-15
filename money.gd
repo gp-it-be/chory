@@ -1,11 +1,12 @@
-class_name Money extends Node
+extends Node
 
-static var singleton := Money.new()
-signal _real_signal(new_value: int)
-static var money_updated:= Signal(singleton._real_signal)
+signal money_updated(new_value: int)
 
-static var money = 1000
+var money := 1000
 
-static func add_money(amount: int):
+func _ready() -> void:
+	money = 1000
+
+func add_money(amount: int) -> void:
 	money += amount
 	money_updated.emit(money)

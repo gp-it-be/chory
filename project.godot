@@ -15,6 +15,10 @@ run/main_scene="uid://cb8g6r0awxoor"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Money="*res://money.gd"
+
 [debug]
 
 gdscript/warnings/unused_parameter=0
