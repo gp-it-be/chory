@@ -28,3 +28,4 @@ func select_next_worker():
 	_selected_worker_index = wrapi(_selected_worker_index +1, 0, _workers.size())
 	_selected_worker = _workers[_selected_worker_index]
 	selection_marker.reparent(_selected_worker,false)
+	SignalBus.WorkerSelected.emit(_selected_worker)

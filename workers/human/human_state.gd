@@ -13,3 +13,6 @@ func abort_task():
 	
 func _accepting_tasks()-> bool:
 	return false
+	
+func emit_state_signals():
+	pass

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://xabeumkcxpof"]
+
+[ext_resource type="Script" uid="uid://biqe0fvifnp7f" path="res://factory/ui/hud/hud.gd" id="1_gljsp"]
+[ext_resource type="Script" uid="uid://dq7edn5gayn8h" path="res://factory/ui/hud/bottom_hud_vm.gd" id="2_bjw5j"]
+
+[node name="HUD" type="Control" unique_id=134851717 node_paths=PackedStringArray("bottom_hud_vm")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_gljsp")
+bottom_hud_vm = NodePath("BottomHubViewModel")
+
+[node name="MoneyContainer" type="PanelContainer" parent="." unique_id=514205710]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MoneyContainer" unique_id=11336509]
+custom_minimum_size = Vector2(100, 50)
+layout_mode = 2
+
+[node name="MoneyLabel" type="Label" parent="MoneyContainer/HBoxContainer" unique_id=1176190474]
+unique_name_in_owner = true
+layout_mode = 2
+text = "$ 0"
+
+[node name="BottomHUD" type="PanelContainer" parent="." unique_id=1574394904]
+custom_minimum_size = Vector2(1000, 150)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Line2D" type="Line2D" parent="." unique_id=576817738]
+
+[node name="BottomHubViewModel" type="Node2D" parent="." unique_id=115712522]
+script = ExtResource("2_bjw5j")

@@ -1,5 +1,7 @@
 class_name Human extends Node2D
 
+signal task_changed(task: MoveTask)
+signal task_aborted
 
 var _state : HumanState
 var inventory := Inventory.new()
@@ -11,6 +13,10 @@ func _ready():
 	_state = $Human/Idle
 	FactoryController.register_worker(self)
 	inventory.stock_changed.connect(update_debug)
+
+##Annoying pattern so that the viewmodel gets the current state after connecting to signals
+func emit_state_signals():
+	_state.emit_state_signals()
 
 #Not satisfied with ItemProvider and GlobalPosition being passed seperatly
 #Hoping I'll discover a way to improve this

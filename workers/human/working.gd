@@ -1,7 +1,9 @@
 class_name WorkingState extends HumanState
 
+
 var _aborted := false
 var _steps: Array[Step]
+var _task: Human.MoveTask
 var _current_step : Step
 var _current_step_index: int:
 	set(value):
@@ -14,9 +16,11 @@ var _current_step_paused := false #The current step is paused, and it will set t
 func abort_task():
 	_aborted = true
 	human.transition_to_idle()
+	human.task_aborted.emit()
 
 func work(task: Human.MoveTask):
 	_aborted = false
+	_task = task
 	_steps = [
 		Step.GoTo.new(task.from_position), 
 		Step.Pickup.new(task.from),
@@ -27,6 +31,7 @@ func work(task: Human.MoveTask):
 	if _current_step_paused:
 		print("risky business, current step was paused will probably at some point unpause and cause bugs")
 	_current_step_paused = false
+	human.task_changed.emit(task)
 
 
 func __process(delta: float):
@@ -66,6 +71,10 @@ func process_finishes_current_step(delta: float) -> bool:
 	return false
 
 
+func emit_state_signals():
+	if not _aborted and _task:
+		human.task_changed.emit(_task)
+	
 
 func _pickup_item(from:ItemProvider)->bool:
 	var take_result = from.pickup_upto(1, Items.AcceptAll.new())
