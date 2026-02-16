@@ -15,13 +15,12 @@ func _ready() -> void:
 	_update_debug()
 	$UI.buy_requested.connect(buy)
 	$UI.close_requested.connect(unselect)
-	_stock.try_add(1, Items.ItemType.CIRCLE)
 	FactoryController.register_container(self)
 
 func buy(itemType: Items.ItemType):
 	##TODO de-prototype
 	if Money.money >= 50:
-		if _stock.try_add(1, itemType):
+		if _stock.try_add_all_or_nothing(Items.Quantities.new({itemType: 1})):
 			Money.add_money(-50)
 		else:
 			print("Couldnt buy because stock dont allow")

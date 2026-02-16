@@ -30,17 +30,6 @@ func try_take_all_or_nothing(to_take: Items.Quantities) -> TakeResult:
 		return TakeResultSuccess.new(to_take)
 	return TakeResultNone.new()
 	
-func try_add(amount: int, type: Items.ItemType) -> bool: #wether adding was succesful
-	if(amount == 0): return true
-	if not allow_multiple_types_together:
-		if count(Items.AcceptAll.new()) != _counts.get_count(type):
-			print("Couldnt add because theres items of different type")
-			return false
-	_counts.set_count(type, _counts.get_count(type) + amount)
-	stock_changed.emit(_counts)
-	return true	
-	
-	
 func try_add_all_or_nothing(to_add: Items.Quantities) -> bool: #wether adding was succesful
 	if to_add.empty(): return true
 	var added = _counts.with_added(to_add)
@@ -60,6 +49,29 @@ func wait_for_at_least(amount : int, filter: Items.ItemFilter):
 		var counts = await stock_changed
 		if filter.amount_matching(counts) >= amount:
 			return
+
+func wait_for_at_least_quantities(quantities: Items.Quantities):
+	if _counts.has_all(quantities):
+			return
+	while true:
+		await stock_changed
+		if _counts.has_all(quantities):
+			return
+
+func wait_for_room_for(quantities: Items.Quantities):
+	if allow_multiple_types_together: return
+	if quantities.get_types().size() > 1:
+		push_error("Infinitely waiting for room that will never be available.")
+		
+	if _only_has_type(quantities): return
+	while true:
+		await stock_changed
+		if _only_has_type(quantities): return
+	
+func _only_has_type(quantities: Items.Quantities):
+	var result = _counts.get_types().all(quantities.get_types().has)
+	print(result, " only has types of items to be delivered")
+	return result
 
 func debug_string():
 	return "%s" % _counts

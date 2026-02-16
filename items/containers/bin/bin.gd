@@ -9,7 +9,7 @@ func _ready() -> void:
 	_stock.stock_changed.connect(func(value):
 		$Debug.text = _stock.debug_string()
 		)
-	_stock.try_add(start_count, Items.ItemType.CIRCLE)
+	_stock.try_add_all_or_nothing(Items.Quantities.new({Items.ItemType.CIRCLE: start_count}))
 	FactoryController.register_container(self)
 
 func as_provider():

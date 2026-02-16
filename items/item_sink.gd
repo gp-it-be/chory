@@ -6,15 +6,19 @@ var _real_object: Variant:
 		_real_object = value
 	
 func try_deliver(counts: Items.Quantities) -> DeliverResult:
+	print("TODO use the add_all_or_nothing ? or deliver ")
 	var types = counts.get_types()
 	var values = counts.get_values()
 	assert(types.size() == 1, "Implement more than 1 type at once. Deliver what fits?")
-	if _real_object.try_add(values[0], types[0]):
+	if _real_object.try_add_all_or_nothing(Items.Quantities.new({types[0]: values[0]})):
 		return DeliverResult.SUCCESS
 	return DeliverResult.FAILED
 
 func item_count():
 	return _real_object.count()
+	
+func wait_for_room_for(quantities: Items.Quantities):
+	await _real_object.wait_for_room_for(quantities)
 
 static func wrap(object: Variant) -> ItemSink:
 	var sink = ItemSink.new()
@@ -22,7 +26,7 @@ static func wrap(object: Variant) -> ItemSink:
 	return sink
 
 func _validate_interface(obj: Variant):
-	_assert_obj_has_method(obj, "try_add", [typeof(1), typeof(Items.ItemType.CIRCLE)], ["", "Items.ItemType"])
+	_assert_obj_has_method(obj, "try_add_all_or_nothing", [typeof(Items.Quantities)], ["RefCounted"])
 	
 func _assert_obj_has_method(object: Variant, name: String, param_types: Array[Variant], param_type_class_names: Array[Variant]):
 	var methods :Array[Dictionary]= object.get_method_list()

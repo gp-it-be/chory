@@ -7,6 +7,7 @@ var _current_step_index: int:
 	set(value):
 		_current_step_index = value
 		_current_step = _steps[value]
+var _last_human_delivery_attempt_quantities
 		
 var _current_step_paused := false #The current step is paused, and it will set this flag to false when unpaused by itself
 
@@ -42,8 +43,12 @@ func process_finishes_current_step(delta: float) -> bool:
 
 	if _current_step is Step.Deliver:
 		var step = _current_step as Step.Deliver
-		_deliver_item(step.to)
-		return true
+		var delivered = _deliver_item(step.to)
+		if not delivered:
+			_current_step_paused = true
+			await step.to.wait_for_room_for(_last_human_delivery_attempt_quantities)
+			_current_step_paused = false
+		return delivered
 
 	if _current_step is Step.Pickup:
 		var step = _current_step as Step.Pickup
@@ -61,22 +66,25 @@ func process_finishes_current_step(delta: float) -> bool:
 	return false
 
 
-func _pickup_item(from:ItemProvider):
+func _pickup_item(from:ItemProvider)->bool:
 	var take_result = from.pickup_upto(1, Items.AcceptAll.new())
 	if take_result is Inventory.TakeResultSuccess:
 		assert(take_result.counts.get_types().size() == 1)
-		var result = human.inventory.try_add(take_result.counts.get_values()[0], take_result.counts.get_types()[0])
+		var result = human.inventory.try_add_all_or_nothing(take_result.counts)
 		return true
 	else: 
 		return false
 
-func _deliver_item(to: ItemSink):
+func _deliver_item(to: ItemSink) -> bool:
 	var human_item = human.inventory.pickup_upto(1, Items.AcceptAll.new())
 	assert(human_item is Inventory.TakeResultSuccess)
+	_last_human_delivery_attempt_quantities = human_item.counts
 	
-	var result = to.try_deliver((human_item as Inventory.TakeResultSuccess).counts)
-	assert(result == ItemSink.DeliverResult.SUCCESS, "Add support for sinks that get full (wait for stock change and retry?)")
+	var success = to.try_deliver((human_item as Inventory.TakeResultSuccess).counts) == ItemSink.DeliverResult.SUCCESS
 	
+	if not success:
+		human.inventory.try_add_all_or_nothing(human_item.counts)
+	return success
 
 func _near(global :GlobalPosition):
 	return global.get_global_position().distance_squared_to(global_position) < 1000

@@ -27,6 +27,12 @@ func item_count(filter: Items.ItemFilter):
 func wait_for_at_least_items_available(amount: int, filter: Items.ItemFilter):
 	await _real_object.wait_for_at_least(amount, filter)
 
+func wait_for_at_least_quantities_available(quantities: Items.Quantities):
+	await _real_object.wait_for_at_least_quantities(quantities)
+	
+func wait_for_room_for(quantities: Items.Quantities ):
+	await _real_object.wait_for_room_for(quantities)
+
 func _validate_interface(obj: Variant):
 	get_method_list()
 	var methods :Array[Dictionary]= obj.get_method_list()
