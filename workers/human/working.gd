@@ -66,6 +66,7 @@ func process_finishes_current_step(delta: float) -> bool:
 	return false
 
 
+
 func _pickup_item(from:ItemProvider)->bool:
 	var take_result = from.pickup_upto(1, Items.AcceptAll.new())
 	if take_result is Inventory.TakeResultSuccess:

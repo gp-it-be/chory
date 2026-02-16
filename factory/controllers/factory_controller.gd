@@ -2,7 +2,12 @@ class_name FactoryController extends Node2D
 
 
 static var _instance : FactoryController
-var _containers : Array = []
+#var _containers : Array = []
+
+var _provider_containers: Array = []
+var _sink_containers: Array = []
+var _selectable_containers: Array = []
+
 var _worker_controller: Workers 
 var _sad_task_line: Line2D
 var _happy_task_line: Line2D
@@ -45,10 +50,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("click"):
 		_dragging = false
 		if _start_container and _find_start_nearby(event.global_position) ==_start_container:
-			assert(_start_container.has_method("select"), "should probably only allow selecting selectables")
-			_start_container.select()
+			if _selectable_containers.has(_start_container):
+				_start_container.select()
 		elif _start_container and _end_container:
-			assert(_start_container.has_method("as_provider") and _end_container.has_method("as_sink"), "Should probably keep containers in 2 lists and only allow starting from providers")
 			_worker_controller.assign_task(
 				Human.MoveTask.new(_start_container.as_provider(), _end_container.as_sink(), _start_container.as_position(), _end_container.as_position())
 			)
@@ -103,25 +107,24 @@ func _update_line(from: Vector2, to: Vector2, is_snapped: bool):
 	current_line.add_point(to)
 
 static func register_container(object):
-	_instance._containers.append(object)
+	if object.has_method("as_sink"):
+		_instance._sink_containers.append(object)
+	if object.has_method("as_provider"):
+		_instance._provider_containers.append(object)
+	if object.has_method("select"):
+		_instance._selectable_containers.append(object)
 	
 static func register_worker(worker: Human):
 	_instance._worker_controller.register_worker(worker)
 	
 func _find_start_nearby(global_pos: Vector2):
-	for container in _containers:
-		if not container.has_method("as_provider"):
-			"wont start from a container that isnt a provider"
-			continue
+	for container in _provider_containers:
 		if container.global_position.distance_squared_to(global_pos) < 1000:
 			return container
 	return null
 
 func _find_end_nearby(global_pos: Vector2):
-	for container in _containers:
-		if not container.has_method("as_sink"):
-			"wont end at a container that isnt a sink"
-			continue
+	for container in _sink_containers:
 		if container.global_position.distance_squared_to(global_pos) < 1000:
 			return container
 	return null

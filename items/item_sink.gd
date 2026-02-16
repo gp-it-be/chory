@@ -6,11 +6,7 @@ var _real_object: Variant:
 		_real_object = value
 	
 func try_deliver(counts: Items.Quantities) -> DeliverResult:
-	print("TODO use the add_all_or_nothing ? or deliver ")
-	var types = counts.get_types()
-	var values = counts.get_values()
-	assert(types.size() == 1, "Implement more than 1 type at once. Deliver what fits?")
-	if _real_object.try_add_all_or_nothing(Items.Quantities.new({types[0]: values[0]})):
+	if _real_object.try_add_all_or_nothing(counts):
 		return DeliverResult.SUCCESS
 	return DeliverResult.FAILED
 
