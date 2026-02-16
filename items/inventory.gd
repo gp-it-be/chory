@@ -14,7 +14,6 @@ func pickup_upto(amount: int, filter: Items.ItemFilter) -> Inventory.TakeResult:
 	for type in _counts.get_types():
 		var type_taken = min(still_to_take, _counts.get_count(type))
 		_counts.reduce_count(type, type_taken)
-		print("Took ", type_taken, " of ", type)
 		still_to_take -= type_taken
 		taken.set_count(type, type_taken)
 		if(still_to_take == 0):
@@ -69,9 +68,7 @@ func wait_for_room_for(quantities: Items.Quantities):
 		if _only_has_type(quantities): return
 	
 func _only_has_type(quantities: Items.Quantities):
-	var result = _counts.get_types().all(quantities.get_types().has)
-	print(result, " only has types of items to be delivered")
-	return result
+	return _counts.get_types().all(quantities.get_types().has)
 
 func debug_string():
 	return "%s" % _counts

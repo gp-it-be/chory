@@ -25,6 +25,7 @@ func _ready():
 	ui.contract_complete_requested.connect(_complete_contract)
 	
 func _complete_contract(contract: Contract):
+	has_emitted = false #hack to trigger a new one
 	if(not _active_contracts.has(contract)): 
 		push_warning("Tried to complete a contract that isnt active")
 		return
@@ -33,11 +34,7 @@ func _complete_contract(contract: Contract):
 		_active_contracts.erase(contract)
 		ui.stop_tracking(contract)
 		
-	
-
-
-
-
+		
 #Temporary trigger to offer a contract choice
 func _process(delta: float) -> void:
 	if has_emitted: return
